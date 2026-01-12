@@ -1,51 +1,88 @@
 return {
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
-    -- This is the critical change: Use opts instead of manual require
-    opts = {
-      ensure_installed = {
-        -- Base & Shell
-        'bash',
-        'fish',
-        'make',
-        'cmake',
-        'toml',
-        'yaml',
-        'printf',
-        'diff',
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		event = { "BufReadPost", "BufNewFile" },
+		-- This is the critical change: Use opts instead of manual require
+		dependencies = {
+			{
+				"HiPhish/rainbow-delimiters.nvim",
+				config = function()
+					require("rainbow-delimiters.setup").setup({
+						strategy = {
+							[""] = "rainbow-delimiters.strategy.global",
+							commonlisp = "rainbow-delimiters.strategy.local",
+						},
+						query = {
+							[""] = "rainbow-delimiters",
+							lua = "rainbow-blocks",
+							latex = "rainbow-blocks",
+							javascript = "rainbow-delimiters-react",
+							c = "rainbow-delimiters",
+							cpp = "rainbow-delimiters",
+							typescript = "rainbow-delimiters",
+							tsx = "rainbow-delimiters",
+						},
+						highlight = {
+							"RainbowDelimiterRed",
+							"RainbowDelimiterOrange",
+							"RainbowDelimiterYellow",
+							"RainbowDelimiterGreen",
+							"RainbowDelimiterBlue",
+							"RainbowDelimiterViolet",
+							"RainbowDelimiterCyan",
+						},
+					})
+				end,
+			},
+		},
+		opts = {
+			ensure_installed = {
+				-- Base & Shell
+				"bash",
+				"fish",
+				"make",
+				"cmake",
+				"toml",
+				"yaml",
+				"printf",
+				"diff",
 
-        -- C / C++ / Rust
-        'c',
-        'cpp',
-        'rust',
+				-- C / C++ / Rust
+				"c",
+				"cpp",
+				"rust",
 
-        -- Go
-        'go',
-        'gomod',
-        'gosum',
-        'gotmpl',
-        'gowork',
+				-- Go
+				"go",
+				"gomod",
+				"gosum",
+				"gotmpl",
+				"gowork",
 
-        -- Web & Docs
-        'html',
-        'markdown',
-        'markdown_inline',
-        'query',
+				-- Web & Docs
+				"html",
+				"markdown",
+				"markdown_inline",
+				"query",
 
-        -- Neovim / Lua
-        'lua',
-        'luadoc',
-        'vim',
-        'vimdoc',
-      },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        use_languagetree = true,
-      },
-      indent = { enable = true },
-    },
-  },
+				-- Neovim / Lua
+				"lua",
+				"luadoc",
+				"vim",
+				"vimdoc",
+			},
+			auto_install = true,
+			highlight = {
+				enable = true,
+				use_languagetree = true,
+			},
+			indent = { enable = true },
+			textobjexts = {
+				select = {
+					enable = false,
+				},
+			},
+		},
+	},
 }

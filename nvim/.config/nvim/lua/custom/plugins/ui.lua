@@ -1,145 +1,128 @@
 return {
-    {
-        'eldritch-theme/eldritch.nvim',
-        lazy = false,
-        priority = 1000,
-        opts = {
-            transparent = true, -- Clears the main buffer background
-            styles = {
-                comments = { italic = true },
-                variables = { italic = true },
-            },
-            on_highlights = function(highlights, colors)
-                -- This is the "magic" section to keep floats solid
-                highlights.NormalFloat = { bg = colors.bg_dark } -- Keep popups solid
-                highlights.FloatBorder = { bg = colors.bg_dark, fg = colors.purple }
-                highlights.TelescopeNormal = { bg = colors.bg_dark }
-                highlights.TelescopeBorder = { bg = colors.bg_dark, fg = colors.purple }
+	{
+		"eldritch-theme/eldritch.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			transparent = true, -- Clears the main buffer background
+			styles = {
+				comments = { italic = true },
+				variables = { italic = true },
+			},
+			on_highlights = function(highlights, colors)
+				-- This is the "magic" section to keep floats solid
+				highlights.NormalFloat = { bg = colors.bg_dark } -- Keep popups solid
+				highlights.FloatBorder = { bg = colors.bg_dark, fg = colors.purple }
+				highlights.TelescopeNormal = { bg = colors.bg_dark }
+				highlights.TelescopeBorder = { bg = colors.bg_dark, fg = colors.purple }
 
-                -- Optional: Make the floating window background slightly
-                -- different from your terminal to make it pop
-                highlights.Pmenu = { bg = colors.bg_dark } -- Autocomplete menu
-            end,
-        },
-        config = function(_, opts)
-            require('eldritch').setup(opts)
-            vim.cmd.colorscheme 'eldritch'
+				-- Optional: Make the floating window background slightly
+				-- different from your terminal to make it pop
+				highlights.Pmenu = { bg = colors.bg_dark } -- Autocomplete menu
+			end,
+		},
+		config = function(_, opts)
+			require("eldritch").setup(opts)
+			vim.cmd.colorscheme("eldritch")
 
-            -- Applying your custom rainbow and parameter colors
-            local hl = vim.api.nvim_set_hl
-            hl(0, 'RainbowDelimiterIndigo', { fg = '#5c5cFF' })
-            hl(0, 'Tag', { fg = '#56B6C2', bold = true })
-            hl(0, '@tag', { fg = '#56B6C2', bold = true })
-            hl(0, '@variable.parameter', { fg = '#E06C75', italic = true })
-        end,
-    },
-    {
-        'HiPhish/rainbow-delimiters.nvim',
-        submodules = { 'rainbow-delimiters' },
-        config = function()
-            require('rainbow-delimiters.setup').setup {
-                highlight = {
-                    'RainbowDelimiterIndigo',
-                    'RainbowDelimiterYellow',
-                    'RainbowDelimiterBlue',
-                    'RainbowDelimiterOrange',
-                    'RainbowDelimiterGreen',
-                    'RainbowDelimiterViolet',
-                    'RainbowDelimiterCyan',
-                },
-            }
-        end,
-    },
-    {
-        -- 1. Icons (The foundation for all UI)
-        { 'nvim-tree/nvim-web-devicons', lazy = true },
+			-- Applying your custom rainbow and parameter colors
+			local hl = vim.api.nvim_set_hl
+			hl(0, "RainbowDelimiterIndigo", { fg = "#5c5cFF" })
+			hl(0, "Tag", { fg = "#56B6C2", bold = true })
+			hl(0, "@tag", { fg = "#56B6C2", bold = true })
+			hl(0, "@variable.parameter", { fg = "#E06C75", italic = true })
+		end,
+	},
+	{
+		-- 1. Icons (The foundation for all UI)
+		{ "nvim-tree/nvim-web-devicons", lazy = true },
 
-        -- 2. Statusline (Replaces the NvChad bottom bar)
-        {
-            'nvim-lualine/lualine.nvim',
-            dependencies = { 'nvim-tree/nvim-web-devicons' },
-            opts = {
-                options = {
-                    theme = 'tokyonight', -- Or 'catppuccin', 'onedark', etc.
-                    component_separators = '|',
-                    section_separators = { left = '', right = '' },
-                },
-                sections = {
-                    lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-                    lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
-                },
-            },
-        },
+		-- 2. Statusline (Replaces the NvChad bottom bar)
+		{
+			"nvim-lualine/lualine.nvim",
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			opts = {
+				options = {
+					theme = "tokyonight", -- Or 'catppuccin', 'onedark', etc.
+					component_separators = "|",
+					section_separators = { left = "", right = "" },
+				},
+				sections = {
+					lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+					lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
+				},
+			},
+		},
 
-        -- 3. Fancy UI for Messages, Cmdline, and Popupmenu
-        {
-            'folke/noice.nvim',
-            event = 'VeryLazy',
-            opts = {
-                views = {
-                    cmdline_popup = {
-                        position = {
-                            row = '40%', -- Adjust this percentage to move it up or down
-                            col = '50%',
-                        },
-                        size = {
-                            width = 60,
-                            height = 'auto',
-                        },
-                    },
-                },
-                popupmenu = {
-                    relative = 'editor',
-                    position = {
-                        row = '53%', -- Positions the suggestion menu just below the centered cmdline
-                        col = '50%',
-                    },
-                },
-                lsp = {
-                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-                    override = {
-                        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-                        ['vim.lsp.util.stylize_markdown'] = true,
-                        ['cmp.entry.get_documentation'] = true,
-                    },
-                },
-                presets = {
-                    bottom_search = false, -- use a classic bottom cmdline for search
-                    command_palette = true, -- position the cmdline and popupmenu together
-                    long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = true, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false, -- add a border to hover docs and signature help
-                },
-            },
-            dependencies = {
-                'MunifTanjim/nui.nvim',
-                'rcarriga/nvim-notify',
-            },
-        },
+		-- 3. Fancy UI for Messages, Cmdline, and Popupmenu
+		{
+			"folke/noice.nvim",
+			event = "VeryLazy",
+			opts = {
+				views = {
+					cmdline_popup = {
+						position = {
+							row = "40%", -- Adjust this percentage to move it up or down
+							col = "50%",
+						},
+						size = {
+							width = 60,
+							height = "auto",
+						},
+					},
+				},
+				popupmenu = {
+					relative = "editor",
+					position = {
+						row = "53%", -- Positions the suggestion menu just below the centered cmdline
+						col = "50%",
+					},
+				},
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+				},
+				presets = {
+					bottom_search = false, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = true, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+			},
+			dependencies = {
+				"MunifTanjim/nui.nvim",
+				"rcarriga/nvim-notify",
+			},
+		},
 
-        -- 4. Color Highlighter (Shows #hex colors in CSS/Lua)
-        {
-            {
-                'brenoprata10/nvim-highlight-colors',
-                event = 'VeryLazy',
-                opts = {
-                    ---Render style
-                    ---@usage 'background'|'foreground'|'virtual'
-                    render = 'virtual',
+		-- 4. Color Highlighter (Shows #hex colors in CSS/Lua)
+		{
+			{
+				"brenoprata10/nvim-highlight-colors",
+				event = "VeryLazy",
+				opts = {
+					---Render style
+					---@usage 'background'|'foreground'|'virtual'
+					render = "virtual",
 
-                    ---Set virtual symbol
-                    virtual_symbol = '■',
+					---Set virtual symbol
+					virtual_symbol = "■",
 
-                    ---Enable named colors (Red, Blue, etc)
-                    enable_named_colors = true,
+					---Enable named colors (Red, Blue, etc)
+					enable_named_colors = true,
 
-                    ---Enable Tailwind colors
-                    enable_tailwind = true,
-                },
-                config = function(_, opts)
-                    require('nvim-highlight-colors').setup(opts)
-                end,
-            },
-        },
-    },
+					---Enable Tailwind colors
+					enable_tailwind = true,
+				},
+				config = function(_, opts)
+					require("nvim-highlight-colors").setup(opts)
+				end,
+			},
+		},
+	},
 }

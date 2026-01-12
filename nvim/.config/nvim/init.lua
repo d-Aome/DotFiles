@@ -98,16 +98,10 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
-vim.o.number = true
+-- Make line numbers default vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
--- tabstop
-vim.o.expandtab = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.softtabstop = 4
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -125,7 +119,6 @@ end)
 
 -- Enable break indent
 vim.o.breakindent = true
-
 -- Save undo history
 vim.o.undofile = true
 
@@ -154,9 +147,7 @@ vim.o.splitbelow = true
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
-vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
+vim.opt.list = false
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
 
@@ -171,6 +162,10 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -190,10 +185,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -254,12 +249,29 @@ require('lazy').setup({
     -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
     {
         'NMAC427/guess-indent.nvim',
-        ops = {
-            auto_cmd = true,
-            override_editorconfig = false,
-        },
         config = function()
-            require('guess-indent').setup(opts)
+            require('guess-indent').setup {
+                auto_cmd = true,
+                override_editorconfig = false,
+                filetype_exclude = {
+                    'netrw',
+                    'tutor',
+                },
+                buftype_exclude = {
+                    'help',
+                    'nofile',
+                    'temrinal',
+                },
+                on_tab_options = {
+                    ['expandtab'] = true,
+                },
+                on_space_options = { -- A table of vim options when spaces are detected
+                    ['expandtab'] = true,
+                    ['tabstop'] = 'detected', -- If the option value is 'detected', The value is set to the automatically detected indent size.
+                    ['softtabstop'] = 'detected',
+                    ['shiftwidth'] = 'detected',
+                },
+            }
         end,
     },
     -- Detect tabstop and shiftwidth automatically
@@ -359,8 +371,11 @@ require('lazy').setup({
 
             -- Document existing key chains
             spec = {
-                { '<leader>s', group = '[S]earch' },
+                { '<leader>f', group = '[F]uzzy Find' },
                 { '<leader>t', group = '[T]oggle' },
+                { '<leader>c', group = '[C]ode Actions' },
+                { '<leader>l', group = '[L]azyGit' },
+                { '<leader>d', group = '[D]ebug' },
                 { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
             },
         },
@@ -422,12 +437,20 @@ require('lazy').setup({
                 -- You can put your default mappings / updates / etc. in here
                 --  All the info you're looking for is in `:help telescope.setup()`
                 --
-                -- defaults = {
-                --   mappings = {
-                --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-                --   },
-                -- },
-                -- pickers = {}
+                defaults = {
+                    mappings = {
+                        i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+                    },
+                    file_ignore_patterns = {
+                        '.git/',
+                    },
+                },
+                pickers = {
+                    find_files = {
+                        follow = true,
+                        hidden = true,
+                    },
+                },
                 extensions = {
                     ['ui-select'] = {
                         require('telescope.themes').get_dropdown(),
@@ -441,15 +464,15 @@ require('lazy').setup({
 
             -- See `:help telescope.builtin`
             local builtin = require 'telescope.builtin'
-            vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-            vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
-            vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-            vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-            vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-            vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
-            vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+            vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
+            vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Fuzzy [F]ind [K]eymaps' })
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Fuzzy [F]ind [F]iles' })
+            vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Fuzzy [F]ind [S]elect Telescope' })
+            vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Fuzzy [F]ind current [W]ord' })
+            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Fuzzy [F]ind by [G]rep' })
+            vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Fuzzy [F]ind [D]iagnostics' })
+            vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Fuzzy [F]ind [R]esume' })
+            vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Fuzzy [F]ind Recent Files ("." for repeat)' })
             vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
             -- Slightly advanced example of overriding default behavior and theme
@@ -463,17 +486,17 @@ require('lazy').setup({
 
             -- It's also possible to pass additional configuration options.
             --  See `:help telescope.builtin.live_grep()` for information about particular keys
-            vim.keymap.set('n', '<leader>s/', function()
+            vim.keymap.set('n', '<leader>f/', function()
                 builtin.live_grep {
                     grep_open_files = true,
                     prompt_title = 'Live Grep in Open Files',
                 }
-            end, { desc = '[S]earch [/] in Open Files' })
+            end, { desc = 'Fuzzy [F]ind [/] in Open Files' })
 
             -- Shortcut for searching your Neovim configuration files
             vim.keymap.set('n', '<leader>fn', function()
-                builtin.find_files { cwd = vim.fn.stdpath 'config' }
-            end, { desc = '[S]earch [N]eovim files' })
+                builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true }
+            end, { desc = 'Fuzzy [F]ind [N]eovim files' })
         end,
     },
 
@@ -517,7 +540,7 @@ require('lazy').setup({
         config = function(_, opts)
             require('tokyonight').setup(opts)
             -- COMMENT THIS OUT IF YOU WANT ELDRITCH TO BE THE DEFAULT:
-            vim.cmd.colorscheme 'tokyonight-night'
+            -- vim.cmd.colorscheme 'tokyonight-night'
         end,
     },
 
@@ -539,7 +562,7 @@ require('lazy').setup({
         config = function(_, opts)
             require('eldritch').setup(opts)
             -- UNCOMMENT THIS IF YOU WANT ELDRITCH TO BE THE DEFAULT:
-            -- vim.cmd.colorscheme("eldritch")
+            vim.cmd.colorscheme 'eldritch'
 
             -- Shared Highlights (Rainbow Brackets)
             vim.api.nvim_set_hl(0, 'RainbowDelimiterIndigo', { fg = '#5c5cFF' })
@@ -547,7 +570,12 @@ require('lazy').setup({
     },
 
     -- Highlight todo, notes, etc in comments
-    { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+    {
+        'folke/todo-comments.nvim',
+        event = 'VimEnter',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = { signs = false },
+    },
 
     { -- Collection of various small independent plugins/modules
         'echasnovski/mini.nvim',
@@ -558,7 +586,7 @@ require('lazy').setup({
             --  - va)  - [V]isually select [A]round [)]paren
             --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
             --  - ci'  - [C]hange [I]nside [']quote
-            require('mini.ai').setup { n_lines = 500 }
+            require('mini.ai').setup()
 
             -- Add/delete/replace surroundings (brackets, quotes, etc.)
             --
@@ -574,7 +602,6 @@ require('lazy').setup({
             -- set use_icons to true if you have a Nerd Font
             statusline.setup { use_icons = vim.g.have_nerd_font }
 
-            -- You can configure sections in the statusline by overriding their
             -- default behavior. For example, here we set the section for
             -- cursor location to LINE:COLUMN
             ---@diagnostic disable-next-line: duplicate-set-field
@@ -597,10 +624,8 @@ require('lazy').setup({
     --  Uncomment any of the lines below to enable them (you will need to restart nvim).
     --
     require 'kickstart.plugins.debug',
-    -- require 'kickstart.plugins.indent_line',
     require 'kickstart.plugins.lint',
     require 'kickstart.plugins.autopairs',
-    -- require 'kickstart.plugins.neo-tree',
     require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
     -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -637,6 +662,7 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=4 sts=4 sw=4 et
+--
 vim.api.nvim_set_hl(0, 'Visual', { bg = '#28344a' })
 vim.schedule(function()
     require 'mappings'
