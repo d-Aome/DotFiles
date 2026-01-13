@@ -36,6 +36,12 @@ return {
 				end,
 			},
 		},
+		config = function(_, opts)
+			-- This ensures that the configuration is actually applied
+			require("nvim-treesitter.configs").setup(opts)
+
+			vim.treesitter.language.register("tsx", "javascriptreact")
+		end,
 		opts = {
 			ensure_installed = {
 				-- Base & Shell
@@ -65,6 +71,9 @@ return {
 				"markdown",
 				"markdown_inline",
 				"query",
+				"javascript",
+				"tsx",
+				"typescript",
 
 				-- Neovim / Lua
 				"lua",

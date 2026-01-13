@@ -30,6 +30,7 @@ return {
 					map("grt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype Definition")
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
+
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 						local highlight_augroup =
 							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
@@ -43,10 +44,6 @@ return {
 							group = highlight_augroup,
 							callback = vim.lsp.buf.clear_references,
 						})
-					end
-
-					if client and (client.name == "tl_ls" or client.name == "eslint") then
-						client.server_capabilities.semanticTokensProvider = nil
 					end
 				end,
 			})
@@ -124,8 +121,19 @@ return {
 				-- Default servers to be auto-installed
 				html = {},
 				cssls = {},
-				ts_ls = {},
-				eslint = {},
+				ts_ls = {
+					capabilities = {
+						documentFormattingProvider = false,
+						documentRangeFormattingProvider = false,
+					},
+				},
+				eslint = {
+					capabilities = {
+						documentFormattingProvider = false,
+						documentRangeFormattingProvider = false,
+						semantic_token = false,
+					},
+				},
 				pyright = {},
 				ruff = {},
 				prettier = {},
