@@ -127,7 +127,11 @@ return {
 				ts_ls = {},
 				eslint = {},
 				pyright = {},
+				ruff = {},
+				prettier = {},
 				rust_analyzer = {},
+				bashls = {},
+				gopls = {},
 			}
 
 			-- 5. Mason Tool Installer Setup
