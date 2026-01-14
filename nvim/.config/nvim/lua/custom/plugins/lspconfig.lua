@@ -139,7 +139,6 @@ return {
 				prettier = {},
 				rust_analyzer = {},
 				bashls = {},
-				gopls = {},
 			}
 
 			-- 5. Mason Tool Installer Setup

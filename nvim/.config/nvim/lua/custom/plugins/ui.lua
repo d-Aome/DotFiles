@@ -7,18 +7,33 @@ return {
 		-- 2. Statusline (Replaces the NvChad bottom bar)
 		{
 			"nvim-lualine/lualine.nvim",
-			dependencies = { "nvim-tree/nvim-web-devicons" },
-			opts = {
-				options = {
-					theme = "eldritch", -- Or 'catppuccin', 'onedark', etc.
-					component_separators = "|",
-					section_separators = { left = "", right = "" },
-				},
-				sections = {
-					lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-					lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
-				},
-			},
+			dependencies = { "nvim-tree/nvim-web-devicons", "folke/trouble.nvim" },
+			opts = function()
+				-- 1. Initialize Trouble Symbols
+				local trouble = require("trouble")
+				local symbols = trouble.statusline({
+					mode = "lsp_document_symbols",
+					groups = {},
+					title = false,
+					filter = { range = true },
+					format = "{kind_icon}{symbol.name:Normal}",
+					-- This ensures the background matches the 'c' section of lualine
+					hl_group = "lualine_c_normal",
+				})
+
+				return {
+					options = {
+						theme = "eldritch", -- Or 'catppuccin', 'onedark', etc.
+						component_separators = "|",
+						section_separators = { left = "", right = "" },
+						globalstatus = true,
+					},
+					sections = {
+						lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+						lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
+					},
+				}
+			end,
 		},
 
 		-- 3. Fancy UI for Messages, Cmdline, and Popupmenu
