@@ -3,10 +3,6 @@ local map = vim.keymap.set
 -- =============================================================================
 -- 1. General Keymaps
 -- =============================================================================
-
--- Exit modes with jk
-map({ "i", "v" }, "jk", "<ESC>", { desc = "Exit insert/visual mode" })
-
 -- Yank to end of line
 map("n", "Y", "y$", { desc = "Yank to end of line" })
 

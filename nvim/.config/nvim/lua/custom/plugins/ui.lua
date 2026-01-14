@@ -1,38 +1,5 @@
 return {
-	{
-		"eldritch-theme/eldritch.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			transparent = true, -- Clears the main buffer background
-			styles = {
-				comments = { italic = true },
-				variables = { italic = true },
-			},
-			on_highlights = function(highlights, colors)
-				-- This is the "magic" section to keep floats solid
-				highlights.NormalFloat = { bg = colors.bg_dark } -- Keep popups solid
-				highlights.FloatBorder = { bg = colors.bg_dark, fg = colors.purple }
-				highlights.TelescopeNormal = { bg = colors.bg_dark }
-				highlights.TelescopeBorder = { bg = colors.bg_dark, fg = colors.purple }
-
-				-- Optional: Make the floating window background slightly
-				-- different from your terminal to make it pop
-				highlights.Pmenu = { bg = colors.bg_dark } -- Autocomplete menu
-			end,
-		},
-		config = function(_, opts)
-			require("eldritch").setup(opts)
-			vim.cmd.colorscheme("eldritch")
-
-			-- Applying your custom rainbow and parameter colors
-			local hl = vim.api.nvim_set_hl
-			hl(0, "RainbowDelimiterIndigo", { fg = "#5c5cFF" })
-			hl(0, "Tag", { fg = "#56B6C2", bold = true })
-			hl(0, "@tag", { fg = "#56B6C2", bold = true })
-			hl(0, "@variable.parameter", { fg = "#E06C75", italic = true })
-		end,
-	},
+	{},
 	{
 		-- 1. Icons (The foundation for all UI)
 		{ "nvim-tree/nvim-web-devicons", lazy = true },
@@ -43,7 +10,7 @@ return {
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 			opts = {
 				options = {
-					theme = "tokyonight", -- Or 'catppuccin', 'onedark', etc.
+					theme = "eldritch", -- Or 'catppuccin', 'onedark', etc.
 					component_separators = "|",
 					section_separators = { left = "", right = "" },
 				},

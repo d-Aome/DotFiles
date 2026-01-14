@@ -41,6 +41,8 @@ bindkey '^[w' kill-region
 
 
 # Environment & Paths
+export EDITOR='nvim'
+export VISUAL='nvim'
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 export PATH=$PATH:$HOME/.tmux/plugins/tmuxifier/bin
 export PATH=$PATH:$HOME/.dotnet/tools
@@ -59,7 +61,6 @@ setopt hist_find_no_dups
 
 # 9. Completion Styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# FIX: Removed quotes around LS_COLORS to prevent compadd error
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
