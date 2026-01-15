@@ -139,6 +139,8 @@ return {
 				prettier = {},
 				rust_analyzer = {},
 				bashls = {},
+				shellcheck = {},
+				shfmt = {},
 			}
 
 			-- 5. Mason Tool Installer Setup
