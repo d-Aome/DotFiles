@@ -7,7 +7,11 @@ return {
 		-- 2. Statusline (Replaces the NvChad bottom bar)
 		{
 			"nvim-lualine/lualine.nvim",
-			dependencies = { "nvim-tree/nvim-web-devicons", "folke/trouble.nvim" },
+			dependencies = {
+				"nvim-tree/nvim-web-devicons",
+				"folke/trouble.nvim",
+				{ "yavorski/lualine-macro-recording.nvim" },
+			},
 			opts = function()
 				-- 1. Initialize Trouble Symbols
 				local trouble = require("trouble")
@@ -30,6 +34,7 @@ return {
 					},
 					sections = {
 						lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+						lualine_c = { "macro_recording", "%S" },
 						lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
 					},
 				}
