@@ -78,7 +78,24 @@ return {
 			},
 			dependencies = {
 				"MunifTanjim/nui.nvim",
-				"rcarriga/nvim-notify",
+				{
+					"rcarriga/nvim-notify",
+					config = function()
+						require("notify").setup({
+							background_colour = "#000000",
+
+							-- local buf = an integer
+							-- local notification = a table with the notify.Record format
+							highlights = {
+								title = "NotifyTitle",
+								icon = "NotifyIcon",
+								border = "NotifyBorder",
+								body = "NotifyBody",
+							},
+							merge_duplicates = true,
+						})
+					end,
+				},
 			},
 		},
 
