@@ -71,6 +71,21 @@ alias ls='ls --color=auto'
 alias vim='nvim'
 alias c='clear'
 
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-dos="NVIM_APPNAME=nvimDos nvim"
+function nvims() {
+  items=("default" "NvChad" "nvimDos")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+
+bindkey -s ^a "nvims\n"
 # 11. Shell Integrations
 eval "$(tmuxifier init -)"
 eval "$(fzf --zsh)"

@@ -121,19 +121,3 @@ end
 map("n", "<leader>e", function()
 	toggle_telescope(harpoon:list())
 end, { desc = "Open harpoon window" })
-
--- =============================================================================
--- 4. Autocommands (Quiet Substitute)
--- =============================================================================
-
-vim.api.nvim_create_autocmd("CmdlineLeave", {
-	group = vim.api.nvim_create_augroup("QuietSubstitute", { clear = true }),
-	callback = function()
-		local cmd = vim.fn.getcmdline()
-		if cmd:match("s/") or cmd:match("^%%s") then
-			vim.schedule(function()
-				vim.cmd("nohlsearch")
-			end)
-		end
-	end,
-})

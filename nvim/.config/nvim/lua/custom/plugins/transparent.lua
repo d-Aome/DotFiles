@@ -44,6 +44,8 @@ return {
 			exclude_groups = {
 				"NormalFloat", -- Keeps background for most floating windows
 				"FloatBorder",
+				"TelescopeSelectionCaret",
+				"TelescopeMultiSelection",
 			},
 			-- function: code to be executed after highlight groups are cleared
 			-- Also the user event "TransparentClear" will be triggered
