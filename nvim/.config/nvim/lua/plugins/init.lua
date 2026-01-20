@@ -220,6 +220,35 @@ return {
             require "configs.mini"
         end,
     },
+    {
+        "stevearc/overseer.nvim",
+        ---@module 'overseer'
+        ---@type overseer.SetupOpts
+        opts = {},
+        config = function(_, _opts)
+            require("overseer").setup()
+        end,
+    },
+    {
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            -- Creates a beautiful debugger UI
+            "rcarriga/nvim-dap-ui",
+            -- Required dependency for nvim-dap-ui
+            "nvim-neotest/nvim-nio",
+
+            -- Installs the debug adapters for you
+            "williamboman/mason.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
+
+            -- Add your own debuggers here
+            "leoluz/nvim-dap-go",
+            "mfussenegger/nvim-dap-python",
+        },
+        config = function()
+            require "configs.dap"
+        end,
+    },
     -- ========================================================================== --
     --                               USER INTERFACE                               --
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --

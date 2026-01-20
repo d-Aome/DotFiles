@@ -55,7 +55,32 @@ M.ui = {
     },
     statusline = {
         separator_style = "default",
+        modules = {
+            macro = function()
+                local recording_register = vim.fn.reg_recording()
+                if recording_register == "" then
+                    return ""
+                else
+                    -- Using %#{HighlightGroup}# syntax for colors.
+                    -- "St_LspError" usually gives a nice red color suitable for recording.
+                    return "%#St_LspError# 󰑋 Rec @" .. recording_register .. " "
+                end
+            end,
+        },
         theme = "vscode_colored",
+        order = {
+            "mode",
+            "file",
+            "git",
+            "macro",
+            "%=",
+            "lsp_msg",
+            "%=",
+            "diagnostics",
+            "lsp",
+            "cursor",
+            "cwd",
+        },
     },
 }
 M.lsp = {

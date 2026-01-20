@@ -14,3 +14,12 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.winhighlight = "Normal:NormalFloat"
     end,
 })
+
+-- lua/init.lua
+
+vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+    callback = function()
+        -- Force a redraw of the statusline immediately
+        vim.cmd "redrawstatus"
+    end,
+})

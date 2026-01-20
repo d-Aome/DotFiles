@@ -93,6 +93,17 @@ vim.keymap.set("n", "K", function()
         vim.lsp.buf.hover()
     end
 end, { desc = "Hover (Smart Fallback)" })
+
+-- ========================================================================== --
+--                                 DEBUGGING                                  --
+-- ========================================================================== --
+map('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
+map('n', '<F1>', function() require('dap').step_into() end, {desc = 'Debug: Step Into', })
+map('n', '<F2>', function() require('dap').step_over() end, {desc = 'Debug: Step Over', })
+map('n', '<F3>', function() require('dap').step_out() end, {desc = 'Debug: Step Out', })
+map('n', '<leader>b', function() require('dap').toggle_breakpoint() end, {desc = 'Debug: Toggle Breakpoint', })
+map('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, {desc = 'Debug: Set Breakpoint', })
+map('n', '<F7>', function() require('dapui').toggle() end, {desc = 'Debug: See last session result.', })
 -- ========================================================================== --
 --                               TELESCOPE                                    --
 -- ========================================================================== --
