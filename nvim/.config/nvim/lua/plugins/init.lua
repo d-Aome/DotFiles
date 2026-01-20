@@ -213,6 +213,13 @@ return {
         config = true, -- Runs require('neogen').setup()
         keys = {},
     },
+    {
+        "nvim-mini/mini.nvim",
+        version = false,
+        config = function()
+            require "configs.mini"
+        end,
+    },
     -- ========================================================================== --
     --                               USER INTERFACE                               --
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --

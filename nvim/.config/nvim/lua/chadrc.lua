@@ -7,15 +7,31 @@ local M = {}
 
 M.base46 = {
     theme = "chadracula-evondev",
-
+    transparency = false,
     hl_override = {
         Comment = { italic = true },
         ["@comment"] = { italic = true },
-        Normal = {
-            bg = "NONE",
+        Normal = { bg = "NONE" }, -- The main text window
+        NormalNC = { bg = "NONE" }, -- "Non-Current" windows (splits that aren't active)
+
+        -- 3. Clean up the "Gutter" (where line numbers live)
+        -- If you don't do this, line numbers will have a solid background block
+        SignColumn = { bg = "NONE" },
+
+        -- 4. (Optional) Clean up other main-editor elements to match transparency
+        EndOfBuffer = { bg = "NONE" }, -- The tildes (~) at the end of the file
+        Folded = { bg = "NONE" }, -- Folded code blocks        FloatBorder = {
+        bg = "black",
+
+        BlinkCmpMenu = { bg = "black", fg = "white" },
+        BlinkCmpMenuBorder = {
+            bg = "black",
         },
+        BlinkCmpDoc = { bg = "#1e222a" },
+        BlinkCmpDocBorder = { fg = "#56b6c2", bg = "#1e222a" },
     },
 }
+
 M.colorify = {
     enabled = true,
 }
