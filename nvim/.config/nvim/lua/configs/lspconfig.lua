@@ -1,10 +1,14 @@
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = function(_, _bufnr) end
-local nvchad_on_init = require("nvchad.configs.lspconfig").on_init
+local _on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 -- local lspconfig = require("lspconfig") -- pre nvim 0.11
 local lspconfig = require "nvchad.configs.lspconfig" -- nvim 0.11
+
+-- for ts_ls and volar
+local vue_language_server_path = vim.fn.stdpath "data"
+    .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 
 -- list of all servers configured.
 lspconfig.servers = {
@@ -13,10 +17,11 @@ lspconfig.servers = {
     "ts_ls",
     "clangd",
     "gopls",
+    "vue_ls",
 }
 
 -- list of servers configured with default config.
-local default_servers = { "html", "cssls", "jedi_language_server", "ruff", "bashls" }
+local default_servers = { "html", "cssls", "jedi_language_server", "ruff", "bashls", "zls" }
 
 -- lsps with default config
 for _, lsp in ipairs(default_servers) do
@@ -28,6 +33,7 @@ for _, lsp in ipairs(default_servers) do
     })
 end
 
+-- typescript, javascript, react
 vim.lsp.config("ts_ls", {
     on_attach = function(client, bufnr)
         -- Disable formatting so Prettier (via conform) handles it
@@ -38,19 +44,42 @@ vim.lsp.config("ts_ls", {
     end,
     on_init = on_init,
     capabilities = capabilities,
+    filetype = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue" },
+    init_options = {
+        plugins = {
+            {
+                name = "@vue/typescript-plugin",
+                location = vue_language_server_path,
+                languages = { "javascript", "typescript", "vue" },
+            },
+        },
+    },
     settings = {
         javascript = {
             preferences = {
                 quoteStyle = "single", -- Fixed typo: qouteStyle -> quoteStyle
+
+                displayPartsForJSDoc = true,
+                check = { npmIsInstalled = false },
             },
         },
         typescript = {
+            displayPartsForJSDoc = true,
+            check = { npmIsInstalled = false },
             preferences = {
                 quoteStyle = "single", -- Fixed typo: qouteStyle -> quoteStyle
             },
         },
     },
 })
+
+vim.lsp.config("volar", {
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+})
+
+-- C/C++
 vim.lsp.config("clangd", { -- nvim 0.11
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
@@ -60,7 +89,7 @@ vim.lsp.config("clangd", { -- nvim 0.11
     on_init = on_init,
     capabilities = capabilities,
 })
-
+-- Golang
 vim.lsp.config("gopls", { -- nvim 0.11
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
@@ -122,6 +151,6 @@ vim.lsp.config("neocmake", {
         format = { enable = true },
         lint = { enable = true },
         scan_cmake_in_package = true,
-        semantic_token = false,
+        semantic_token = true,
     },
 })

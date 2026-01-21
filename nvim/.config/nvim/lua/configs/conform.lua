@@ -7,6 +7,7 @@ local options = {
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
         typescriptreact = { "prettier" },
+        vue = { "prettier" },
         go = { "gofumpt", "goimports-reviser", "golines" },
         python = { "isort", "black" },
         c = { "clang-format" },

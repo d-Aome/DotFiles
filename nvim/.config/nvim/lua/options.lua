@@ -4,7 +4,7 @@ local opt = vim.opt
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 g.have_nerd_font = true
-
+o.laststatus = 3
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!

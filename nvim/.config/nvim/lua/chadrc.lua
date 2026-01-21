@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-    theme = "chadracula-evondev",
+    theme = "horizon",
     transparency = false,
     hl_override = {
         Comment = { italic = true },
@@ -21,7 +21,6 @@ M.base46 = {
         -- 4. (Optional) Clean up other main-editor elements to match transparency
         EndOfBuffer = { bg = "NONE" }, -- The tildes (~) at the end of the file
         Folded = { bg = "NONE" }, -- Folded code blocks        FloatBorder = {
-        bg = "black",
 
         BlinkCmpMenu = { bg = "black", fg = "white" },
         BlinkCmpMenuBorder = {
@@ -83,7 +82,9 @@ M.ui = {
         },
     },
 }
+
 M.lsp = {
     signature = true,
 }
+
 return M

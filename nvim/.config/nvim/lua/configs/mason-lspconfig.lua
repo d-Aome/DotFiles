@@ -26,6 +26,7 @@ local all_servers = {
     "jedi_language_server",
     "ruff",
     "bashls",
+    "vue_ls",
 }
 
 for _, s in ipairs(lspconfig.servers) do

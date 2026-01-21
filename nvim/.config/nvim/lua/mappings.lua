@@ -97,13 +97,27 @@ end, { desc = "Hover (Smart Fallback)" })
 -- ========================================================================== --
 --                                 DEBUGGING                                  --
 -- ========================================================================== --
-map('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
-map('n', '<F1>', function() require('dap').step_into() end, {desc = 'Debug: Step Into', })
-map('n', '<F2>', function() require('dap').step_over() end, {desc = 'Debug: Step Over', })
-map('n', '<F3>', function() require('dap').step_out() end, {desc = 'Debug: Step Out', })
-map('n', '<leader>b', function() require('dap').toggle_breakpoint() end, {desc = 'Debug: Toggle Breakpoint', })
-map('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, {desc = 'Debug: Set Breakpoint', })
-map('n', '<F7>', function() require('dapui').toggle() end, {desc = 'Debug: See last session result.', })
+map("n", "<F5>", function()
+    require("dap").continue()
+end, { desc = "Debug: Start/Continue" })
+map("n", "<F1>", function()
+    require("dap").step_into()
+end, { desc = "Debug: Step Into" })
+map("n", "<F2>", function()
+    require("dap").step_over()
+end, { desc = "Debug: Step Over" })
+map("n", "<F3>", function()
+    require("dap").step_out()
+end, { desc = "Debug: Step Out" })
+map("n", "<leader>b", function()
+    require("dap").toggle_breakpoint()
+end, { desc = "Debug: Toggle Breakpoint" })
+map("n", "<leader>B", function()
+    require("dap").set_breakpoint(vim.fn.input "Breakpoint condition: ")
+end, { desc = "Debug: Set Breakpoint" })
+map("n", "<F7>", function()
+    require("dapui").toggle()
+end, { desc = "Debug: See last session result." })
 -- ========================================================================== --
 --                               TELESCOPE                                    --
 -- ========================================================================== --
@@ -138,6 +152,33 @@ map("n", "<leader>fr", builtin.resume, { desc = "Resume Last Search" })
 map("n", "<leader>fn", function()
     builtin.find_files { cwd = vim.fn.stdpath "config" }
 end, { desc = "Search Neovim Config" })
+
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+
+vim.keymap.set("n", "<leader>fo", function()
+    builtin.find_files {
+        prompt_title = "< Open Directory in Oil >",
+        -- This command forces Telescope to only show directories
+        find_command = { "fd", "--type", "d", "--hidden", "--exclude", ".git" },
+
+        attach_mappings = function(prompt_bufnr, map)
+            -- Overwrite the default "Enter" action
+            actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+
+                -- Get the selected directory path
+                local selection = action_state.get_selected_entry()
+
+                -- Open Oil at that specific path
+                if selection then
+                    require("oil").open(selection.path)
+                end
+            end)
+            return true
+        end,
+    }
+end, { desc = "Find directory and open in Oil" })
 
 -- ========================================================================== --
 --                                 PLUGINS                                    --

@@ -32,6 +32,7 @@ require("lazy").setup({
     { import = "plugins" },
 }, lazy_config)
 
+-- #vim: et:ts=4:sw=4
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")

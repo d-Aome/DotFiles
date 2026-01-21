@@ -4,6 +4,11 @@ lint.linters_by_ft = {
     lua = { "luacheck" },
     python = { "flake8" },
     bash = { "shellcheck" },
+    javascript = { "eslint_d" },
+    typescript = { "eslint_d" },
+    typescriptreact = { "eslint_d" },
+    javascriptreact = { "eslint_d" },
+    vue = { "eslint_d" },
 }
 
 lint.linters.luacheck.args = {

@@ -3,17 +3,41 @@ return {
     border = "rounded", -- Options: "single", "double", "rounded", "solid", "shadow"
     max_width = 80, -- Prevent the window from becoming too wide to read
     max_height = 20, -- Limit height to avoid covering the whole screen
-
+    header = {
+        detect = { "[\\@]class" },
+        styler = "###",
+    },
+    listing = {
+        detect = { "[\\@]li" },
+        styler = " - ",
+    },
     -- 2. Content Customization
-    -- This helps remove or style the repetitive parts of LSP messages
     line = {
-        styler = {
-            -- Highlights specific keywords to make them pop
-            "@param",
-            "@return",
-            "@throws",
-            "@link",
+
+        detect = { "[\\@]brief" },
+        styler = "**",
+    },
+    references = {
+        detect = { "[\\@]ref", "[\\@]c", "[\\@]name" },
+        styler = { "**", "`" },
+    },
+    group = {
+        detect = {
+            -- ["Group name"] = {"detectors"}
+            ["Parameters"] = { "[\\@]param", "[\\@]*param*" },
+            ["Types"] = { "[\\@]tparam" },
+            ["See"] = { "[\\@]see" },
+            ["Return Value"] = { "[\\@]retval" },
         },
+        styler = "`",
+    },
+    code = {
+        start = { "[\\@]code" },
+        ending = { "[\\@]endcode" },
+    },
+    return_statement = {
+        "[\\@]return",
+        "[\\@]*return*",
     },
 
     -- 3. Custom Colors (Optional but recommended)

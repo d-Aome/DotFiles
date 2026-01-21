@@ -27,12 +27,12 @@ return {
         concealcursor = "nvic",
     },
     -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
-    delete_to_trash = false,
+    delete_to_trash = true,
     -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
-    skip_confirm_for_simple_edits = false,
+    skip_confirm_for_simple_edits = true,
     -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
     -- (:help prompt_save_on_select_new_entry)
-    prompt_save_on_select_new_entry = true,
+    prompt_save_on_select_new_entry = false,
     -- Oil will automatically delete hidden buffers after this delay
     -- You can set the delay to false to disable cleanup entirely
     -- Note that the cleanup process only starts when none of the oil buffers are currently displayed
@@ -101,12 +101,7 @@ return {
             { "name", "asc" },
         },
         -- Customize the highlight group for the file name
-        highlight_filename = function(
-            entry,
-            is_hidden,
-            is_link_target,
-            is_link_orphan
-        )
+        highlight_filename = function(entry, is_hidden, is_link_target, is_link_orphan)
             return nil
         end,
     },

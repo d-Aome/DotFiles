@@ -62,7 +62,10 @@ return {
     -- ========================================================================== --
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = { "HiPhish/rainbow-delimiters.nvim" },
+        dependencies = {
+            "HiPhish/rainbow-delimiters.nvim",
+            { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", lazy = true },
+        },
         branch = "main",
         build = ":TSUpdate",
         lazy = false,
@@ -70,6 +73,7 @@ return {
         opts = require("configs.treesitter").opts,
         config = require("configs.treesitter").setup,
     },
+
     {
         "nvim-treesitter/nvim-treesitter-context",
         event = "BufRead",
@@ -215,6 +219,9 @@ return {
     },
     {
         "nvim-mini/mini.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
         version = false,
         config = function()
             require "configs.mini"
@@ -222,10 +229,11 @@ return {
     },
     {
         "stevearc/overseer.nvim",
+        lazy = false,
         ---@module 'overseer'
         ---@type overseer.SetupOpts
         opts = {},
-        config = function(_, _opts)
+        config = function()
             require("overseer").setup()
         end,
     },
@@ -244,9 +252,23 @@ return {
             -- Add your own debuggers here
             "leoluz/nvim-dap-go",
             "mfussenegger/nvim-dap-python",
+            "mxsdev/nvim-dap-vscode-js",
         },
         config = function()
             require "configs.dap"
+        end,
+    },
+    {
+        "mxsdev/nvim-dap-vscode-js",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+    },
+    {
+        "nmac427/guess-indent.nvim",
+        lazy = false,
+        config = function()
+            require "configs.guess-indent"
         end,
     },
     -- ========================================================================== --
@@ -286,7 +308,7 @@ return {
         "Fildo7525/pretty_hover",
         event = "LspAttach",
         opts = require "configs.pretty_hover",
-        config = function(_m, opts)
+        config = function(_, opts)
             require("pretty_hover").setup(opts)
         end,
     },
