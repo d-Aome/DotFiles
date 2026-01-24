@@ -2,7 +2,7 @@
 local lspconfig = require "nvchad.configs.lspconfig" -- nvim 0.11
 
 -- List of servers to ignore during install
-local ignore_install = {}
+local ignore_install = { "rust_analyzer" }
 
 -- Helper function to find if value is in table.
 local function table_contains(table, value)

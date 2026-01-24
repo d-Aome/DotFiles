@@ -18,6 +18,7 @@ lspconfig.servers = {
     "clangd",
     "gopls",
     "vue_ls",
+    "rust_analyzer",
 }
 
 -- list of servers configured with default config.

@@ -1,7 +1,7 @@
 return {
     -- Choose a preset style for diagnostic appearance
     -- Available: "modern", "classic", "minimal", "powerline", "ghost", "simple", "nonerdfont", "amongus"
-    preset = 'classic',
+    preset = "classic",
 
     -- Make diagnostic background transparent
     transparent_bg = false,
@@ -12,13 +12,13 @@ return {
     -- Customize highlight groups for colors
     -- Use Neovim highlight group names or hex colors like "#RRGGBB"
     hi = {
-        error = 'DiagnosticError', -- Highlight for error diagnostics
-        warn = 'DiagnosticWarn', -- Highlight for warning diagnostics
-        info = 'DiagnosticInfo', -- Highlight for info diagnostics
-        hint = 'DiagnosticHint', -- Highlight for hint diagnostics
-        arrow = 'NonText', -- Highlight for the arrow pointing to diagnostic
-        background = 'CursorLine', -- Background highlight for diagnostics
-        mixing_color = 'Normal', -- Color to blend background with (or "None")
+        error = "DiagnosticError", -- Highlight for error diagnostics
+        warn = "DiagnosticWarn", -- Highlight for warning diagnostics
+        info = "DiagnosticInfo", -- Highlight for info diagnostics
+        hint = "DiagnosticHint", -- Highlight for hint diagnostics
+        arrow = "NonText", -- Highlight for the arrow pointing to diagnostic
+        background = "CursorLine", -- Background highlight for diagnostics
+        mixing_color = "Normal", -- Color to blend background with (or "None")
     },
 
     -- List of filetypes to disable the plugin for
@@ -46,7 +46,7 @@ return {
         throttle = 20,
 
         -- Minimum number of characters before wrapping long messages
-        softwrap = 30,
+        softwrap = 60,
 
         -- Control how diagnostic messages are displayed
         -- NOTE: When using display_count = true, you need to enable multiline diagnostics with multilines.enabled = true
@@ -75,7 +75,7 @@ return {
 
         -- Display related diagnostics from LSP relatedInformation
         show_related = {
-            enabled = true, -- Enable displaying related diagnostics
+            enabled = false, -- Enable displaying related diagnostics
             max_count = 3, -- Maximum number of related diagnostics to show per diagnostic
         },
 
@@ -88,14 +88,14 @@ return {
 
         -- Handle messages that exceed the window width
         overflow = {
-            mode = 'wrap', -- "wrap": split into lines, "none": no truncation, "oneline": keep single line
+            mode = "oneline", -- "wrap": split into lines, "none": no truncation, "oneline": keep single line
             padding = 0, -- Extra characters to trigger wrapping earlier
         },
 
         -- Break long messages into separate lines
         break_line = {
-            enabled = false, -- Enable automatic line breaking
-            after = 30, -- Number of characters before inserting a line break
+            enabled = true, -- Enable automatic line breaking
+            after = 80, -- Number of characters before inserting a line break
         },
 
         -- Custom function to format diagnostic messages

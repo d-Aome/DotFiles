@@ -6,28 +6,33 @@
 local M = {}
 
 M.base46 = {
-    theme = "horizon",
+    theme = 'horizon',
     transparency = false,
+    hl_add = {
+        LazyGitFloat = { bg = 'black' },
+        LazyGitBorder = { bg = 'None' },
+    },
     hl_override = {
         Comment = { italic = true },
-        ["@comment"] = { italic = true },
-        Normal = { bg = "NONE" }, -- The main text window
-        NormalNC = { bg = "NONE" }, -- "Non-Current" windows (splits that aren't active)
+        ['@comment'] = { italic = true },
+        Normal = { bg = 'NONE' },   -- The main text window
+
+        NormalNC = { bg = 'NONE' }, -- "Non-Current" windows (splits that aren't active)
 
         -- 3. Clean up the "Gutter" (where line numbers live)
         -- If you don't do this, line numbers will have a solid background block
-        SignColumn = { bg = "NONE" },
+        SignColumn = { bg = 'NONE' },
 
         -- 4. (Optional) Clean up other main-editor elements to match transparency
-        EndOfBuffer = { bg = "NONE" }, -- The tildes (~) at the end of the file
-        Folded = { bg = "NONE" }, -- Folded code blocks        FloatBorder = {
+        EndOfBuffer = { bg = 'NONE' }, -- The tildes (~) at the end of the file
+        Folded = { bg = 'NONE' },      -- Folded code blocks        FloatBorder = {
 
-        BlinkCmpMenu = { bg = "black", fg = "white" },
+        BlinkCmpMenu = { bg = 'black', fg = 'white' },
         BlinkCmpMenuBorder = {
-            bg = "black",
+            bg = 'black',
         },
-        BlinkCmpDoc = { bg = "#1e222a" },
-        BlinkCmpDocBorder = { fg = "#56b6c2", bg = "#1e222a" },
+        BlinkCmpDoc = { bg = '#1e222a' },
+        BlinkCmpDocBorder = { fg = '#56b6c2', bg = '#1e222a' },
     },
 }
 
@@ -35,50 +40,50 @@ M.colorify = {
     enabled = true,
 }
 M.nvdash = { load_on_startup = true }
-M.plugins = {}
 M.ui = {
     tabufline = {
         enabled = false,
     },
     telescope = {
-        style = "bordered",
+        style = 'bordered',
     },
     cmp = {
-        style = "default",
+        style = 'default',
         icons_left = true,
         icons = true,
         format_colors = {
             lsp = true,
-            icon = "icons_left",
+            icon = 'icons_left',
         },
     },
     statusline = {
-        separator_style = "default",
+        separator_style = 'default',
         modules = {
             macro = function()
                 local recording_register = vim.fn.reg_recording()
-                if recording_register == "" then
-                    return ""
+                if recording_register == '' then
+                    return ''
                 else
                     -- Using %#{HighlightGroup}# syntax for colors.
                     -- "St_LspError" usually gives a nice red color suitable for recording.
-                    return "%#St_LspError# 󰑋 Rec @" .. recording_register .. " "
+                    return '%#St_LspError# 󰑋 Rec @' .. recording_register .. ' '
                 end
             end,
         },
-        theme = "vscode_colored",
+        theme = 'vscode_colored',
+
         order = {
-            "mode",
-            "file",
-            "git",
-            "macro",
-            "%=",
-            "lsp_msg",
-            "%=",
-            "diagnostics",
-            "lsp",
-            "cursor",
-            "cwd",
+            'mode',
+            'file',
+            'git',
+            'macro',
+            '%=',
+            'lsp_msg',
+            '%=',
+            'diagnostics',
+            'lsp',
+            'cursor',
+            'cwd',
         },
     },
 }

@@ -20,6 +20,10 @@ return {
             window = { border = "single" },
         },
         ghost_text = { enabled = true },
+        accept = {
+            auto_brackets = { enabled = true },
+            textEdit = true,
+        },
         menu = require("nvchad.blink").menu,
     },
     keymap = {
@@ -70,7 +74,7 @@ return {
             list = {
                 selection = {
                     preselect = true,
-                    auto_insert = true,
+                    auto_insert = false,
                 },
             },
             ghost_text = {

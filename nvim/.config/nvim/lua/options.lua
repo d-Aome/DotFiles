@@ -17,7 +17,7 @@ o.number = true
 o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-o.mouse = "a"
+o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 o.showmode = false
@@ -27,7 +27,7 @@ o.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-    o.clipboard = "unnamedplus"
+    o.clipboard = 'unnamedplus'
 end)
 
 -- Enable break indent
@@ -40,7 +40,7 @@ o.ignorecase = true
 o.smartcase = true
 
 -- Keep signcolumn on by default
-o.signcolumn = "yes"
+o.signcolumn = 'yes'
 
 -- Decrease update time
 o.updatetime = 250
@@ -61,8 +61,9 @@ o.splitbelow = true
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
 opt.list = false
+
 -- Preview substitutions live, as you type!
-o.inccommand = "split"
+o.inccommand = 'split'
 
 -- Show which line your cursor is on
 o.cursorline = true
@@ -80,7 +81,7 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
 
-local is_windows = vim.fn.has "win32" ~= 0
-local sep = is_windows and "\\" or "/"
-local delim = is_windows and ";" or ":"
-vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
+local is_windows = vim.fn.has 'win32' ~= 0
+local sep = is_windows and '\\' or '/'
+local delim = is_windows and ';' or ':'
+vim.env.PATH = table.concat({ vim.fn.stdpath 'data', 'mason', 'bin' }, sep) .. delim .. vim.env.PATH

@@ -3,6 +3,11 @@ require("crates").setup {
         cmp = {
             enabled = true,
         },
+        crates = {
+            enabled = true,
+            max_results = 15,
+            min_chars = 2,
+        },
     },
     lsp = {
         enabled = true,
