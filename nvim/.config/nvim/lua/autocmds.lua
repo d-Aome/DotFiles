@@ -1,8 +1,8 @@
-require "nvchad.autocmds"
+require 'nvchad.autocmds'
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "help", "man" },
-    group = vim.api.nvim_create_augroup("OpaqueManHelp", { clear = true }),
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'help', 'man' },
+    group = vim.api.nvim_create_augroup('OpaqueManHelp', { clear = true }),
     callback = function()
         -- 1. Disable pseudo-transparency (for floating windows)
         vim.opt_local.winblend = 0
@@ -11,15 +11,33 @@ vim.api.nvim_create_autocmd("FileType", {
         -- If your theme clears the background, this maps the local 'Normal'
         -- group to 'NormalFloat' (which usually retains a background color).
         -- You can also change 'NormalFloat' to 'Pmenu' or 'StatusLine' if preferred.
-        vim.opt_local.winhighlight = "Normal:NormalFloat"
+        vim.opt_local.winhighlight = 'Normal:NormalFloat'
     end,
 })
 
 -- lua/init.lua
 
-vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
     callback = function()
         -- Force a redraw of the statusline immediately
-        vim.cmd "redrawstatus"
+        vim.cmd 'redrawstatus'
     end,
 })
+
+local augroup = vim.api.nvim_create_augroup('LspFormattings', {})
+require('null-ls').setup {
+    on_attach = function(client, bufnr)
+        if client.supports_method 'textDocument/formatting' then
+            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                group = augroup,
+                buffer = bufnr,
+                callback = function()
+                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                    -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                    vim.lsp.buf.formatting_sync()
+                end,
+            })
+        end
+    end,
+}

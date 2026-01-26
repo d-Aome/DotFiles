@@ -1,5 +1,4 @@
 local null_ls = require 'null-ls'
-local augroup = vim.api.nvim_create_augroup('LspFormattings', {})
 
 require('mason-null-ls').setup {
     ensure_installed = {
@@ -50,7 +49,14 @@ null_ls.setup {
             },
         },
         -- Web
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettier.with {
+            extra_args = {
+                '--single-qoute',
+                '--jsx-single-qoute',
+                '-trailing-comma',
+                'all',
+            },
+        },
         -- C/C++
         null_ls.builtins.formatting.clang_format.with {
             extra_args = {
@@ -98,6 +104,7 @@ null_ls.setup {
         -- JS / TS / Vue (Handles all standard web filetypes automatically)
 
         require('none-ls.diagnostics.eslint_d').with {
+
             filetypes = { 'javascript', 'javascriptreact', 'vue' },
         },
     },
