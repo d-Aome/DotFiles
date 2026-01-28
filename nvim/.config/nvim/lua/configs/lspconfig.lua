@@ -6,6 +6,26 @@ local capabilities = require('nvchad.configs.lspconfig').capabilities
 -- local lspconfig = require("lspconfig") -- pre nvim 0.11
 local lspconfig = require 'nvchad.configs.lspconfig' -- nvim 0.11
 
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+capabilities.textDocument.completion.completionItem = {
+    documentationFormat = { 'markdown', 'plaintext' },
+    snippetSupport = true,
+    preselectSupport = true,
+    insertReplaceSupport = true,
+    labelDetailsSupport = true,
+    deprecatedSupport = true,
+    commitCharactersSupport = true,
+    tagSupport = { valueSet = { 1 } },
+    resolveSupport = {
+        properties = {
+            'documentation',
+            'detail',
+            'additionalTextEdits',
+        },
+    },
+}
+
 -- for ts_ls and volar
 local vue_language_server_path = vim.fn.stdpath 'data'
     .. '/mason/packages/vue-language-server/node_modules/@vue/language-server'

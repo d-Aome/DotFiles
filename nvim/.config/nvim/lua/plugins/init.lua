@@ -34,6 +34,29 @@ return {
     { import = 'nvchad.blink.lazyspec' },
     {
         'saghen/blink.compat',
+        dependencies = {
+            {
+                'L3MON4D3/LuaSnip',
+                version = '2.*',
+                build = (function()
+                    if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+                        return
+                    end
+                    return 'make install_jsregexp'
+                end)(),
+                dependencies = {
+                    'rafamadriz/friendly-snippets',
+                },
+                config = require 'configs.snippets',
+            },
+            {
+                'windwp/nvim-autopairs',
+                opts = {
+                    fast_wrap = {},
+                    disable_filetype = { 'TelescopePrompt', 'vim' },
+                },
+            },
+        },
         -- use v2.* for blink.cmp v1.*
         version = '2.*',
         -- lazy.nvim will automatically load the plugin when it's required by blink.cmp

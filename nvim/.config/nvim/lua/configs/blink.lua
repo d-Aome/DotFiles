@@ -27,17 +27,21 @@ return {
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
         -- LuaSnip jumps
         ['<A-k>'] = {
-            function(cmp)
-                if cmp.snippet_active() then
-                    return cmp.snippet_forward()
+            function()
+                local luasnip = require 'luasnip'
+                if luasnip.expand_or_locally_jumpable() then
+                    luasnip.expand_or_jump()
+                    return true -- Tells blink to stop here
                 end
             end,
             'fallback',
         },
         ['<A-j>'] = {
-            function(cmp)
-                if cmp.snippet_active() then
-                    return cmp.snippet_backward()
+            function()
+                local luasnip = require 'luasnip'
+                if luasnip.locally_jumpable(-1) then
+                    luasnip.jump(-1)
+                    return true
                 end
             end,
             'fallback',

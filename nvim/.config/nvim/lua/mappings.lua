@@ -30,15 +30,17 @@ map({ 'n', 'v' }, '<C-d>', '<C-d>zz', { desc = 'Jump Down Half Page (Center)' })
 map({ 'n', 'v' }, '<C-u>', '<C-u>zz', { desc = 'Jump Up Half Page (Center)' })
 map('n', 'n', 'nzzzv', { desc = 'Next Match (Center)' })
 map('n', 'N', 'Nzzzv', { desc = 'Prev Match (Center)' })
-
 -- -- Line Manipulation & Yanking --
 map('n', 'Y', 'y$', { desc = 'Yank to end of line' })
 map('n', 'J', 'mzJ`z', { desc = 'Join lines (keep cursor)' })
 map('n', '<leader>o', 'o<ESC>', { desc = 'Insert line below' })
 map('n', '<leader>O', 'O<ESC>', { desc = 'Insert line above' })
+map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move Line Down', silent = true })
+map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move Line Up', silent = true })
 -- -- Visual Mode Moves (The Primeagen mappings) --
 map('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move Line Down' })
-map('v', '<A-k>', ":m '>-2<CR>gv=gv", { desc = 'Move Line Up' })
+map('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move Line Up' })
+
 map('v', '<', '<gv', { desc = 'Indent Left' })
 map('v', '>', '>gv', { desc = 'Indent Right' })
 map('x', '<leader>p', '"_dP', { desc = 'Paste over selection (Keep clipboard)' })
@@ -57,7 +59,7 @@ map('v', '<leader>/', 'gc', { desc = 'Toggle Comment', remap = true })
 map('n', '-', '<CMD>Oil<CR>', { desc = 'Open Parent Directory (Oil)' })
 
 -- ========================================================================== --
---                            LSP & FORMATTING                                --
+--                           LSP & FORMATTING                                --
 -- ========================================================================== --
 
 map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Actions' })
