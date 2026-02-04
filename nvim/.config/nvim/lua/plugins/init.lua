@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good', lazy = false },
+    { 'ThePrimeagen/vim-be-good',      lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -34,29 +34,6 @@ return {
     { import = 'nvchad.blink.lazyspec' },
     {
         'saghen/blink.compat',
-        dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-                version = '2.*',
-                build = (function()
-                    if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-                        return
-                    end
-                    return 'make install_jsregexp'
-                end)(),
-                dependencies = {
-                    'rafamadriz/friendly-snippets',
-                },
-                config = require 'configs.snippets',
-            },
-            {
-                'windwp/nvim-autopairs',
-                opts = {
-                    fast_wrap = {},
-                    disable_filetype = { 'TelescopePrompt', 'vim' },
-                },
-            },
-        },
         -- use v2.* for blink.cmp v1.*
         version = '2.*',
         -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
@@ -75,7 +52,7 @@ return {
     {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
-        lazy = false, -- This plugin is already lazy
+        lazy = false,   -- This plugin is already lazy
         ft = 'rust',
         config = function()
             local mason_registry = require 'mason-registry'
@@ -178,7 +155,7 @@ return {
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
-        lazy = false, -- Matches your original config
+        lazy = false,                                 -- Matches your original config
         opts = require 'configs.oil',
         config = function(_, opts)
             ---@diagnostic disable-next-line: different-requires
@@ -244,8 +221,10 @@ return {
     },
     {
         'nvim-mini/mini.nvim',
+        lazy = false,
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
+            'nvim-treesitter/nvim-treesitter-textobjects',
         },
         version = false,
         config = function()
@@ -302,6 +281,15 @@ return {
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --
     -- ========================================================================== --
     {
+        'folke/todo-comments.nvim',
+        lazy = false,
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = require 'configs.todo-comments',
+        config = function(_, opts)
+            require('todo-comments').setup(opts)
+        end,
+    },
+    {
         'rachartier/tiny-inline-diagnostic.nvim',
         event = 'VeryLazy',
         priority = 1000,
@@ -328,14 +316,6 @@ return {
         },
         opts = function()
             return require('configs.noice').noice_opts
-        end,
-    },
-    {
-        'Fildo7525/pretty_hover',
-        event = 'LspAttach',
-        opts = require 'configs.pretty_hover',
-        config = function(_, opts)
-            require('pretty_hover').setup(opts)
         end,
     },
 }

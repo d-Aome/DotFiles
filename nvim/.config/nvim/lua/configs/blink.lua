@@ -1,19 +1,33 @@
 return {
     -- Your custom nvim-cmp style mappings
-    snippets = { preset = 'luasnip' },
+    snippets = {
+
+        preset = 'luasnip',
+    },
     appearance = { nerd_font_variant = 'normal' },
     completion = {
+        keyword = {
+            range = 'full',
+        },
         list = { selection = { preselect = true, auto_insert = false } },
         documentation = {
             auto_show = true,
             auto_show_delay_ms = 200,
-            window = { border = 'single' },
+            window = { border = 'rounded' },
         },
         ghost_text = { enabled = true },
         accept = {
             auto_brackets = { enabled = true },
         },
         menu = require('nvchad.blink').menu,
+    },
+    fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        sorts = {
+            'score',
+            'sort_text',
+            'label',
+        },
     },
     keymap = {
         preset = 'none',
@@ -26,26 +40,8 @@ return {
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
         -- LuaSnip jumps
-        ['<A-k>'] = {
-            function()
-                local luasnip = require 'luasnip'
-                if luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                    return true -- Tells blink to stop here
-                end
-            end,
-            'fallback',
-        },
-        ['<A-j>'] = {
-            function()
-                local luasnip = require 'luasnip'
-                if luasnip.locally_jumpable(-1) then
-                    luasnip.jump(-1)
-                    return true
-                end
-            end,
-            'fallback',
-        },
+        ['<A-k>'] = { 'snippet_forward', 'fallback' },
+        ['<A-j>'] = { 'snippet_backward', 'fallback' },
     },
 
     cmdline = {
@@ -81,19 +77,19 @@ return {
         default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
         providers = {
             snippets = {
-                min_keyword_length = 2,
+                min_keyword_length = 1,
                 score_offset = 4,
             },
             lsp = {
-                min_keyword_length = 3,
+                min_keyword_length = 2,
                 score_offset = 3,
             },
             path = {
-                min_keyword_length = 3,
+                min_keyword_length = 2,
                 score_offset = 2,
             },
             buffer = {
-                min_keyword_length = 5,
+                min_keyword_length = 4,
                 score_offset = 1,
             },
             lazydev = { module = 'lazydev.integrations.blink', score_offset = 5 },

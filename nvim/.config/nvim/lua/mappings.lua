@@ -37,10 +37,10 @@ map('n', '<leader>o', 'o<ESC>', { desc = 'Insert line below' })
 map('n', '<leader>O', 'O<ESC>', { desc = 'Insert line above' })
 map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move Line Down', silent = true })
 map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move Line Up', silent = true })
--- -- Visual Mode Moves (The Primeagen mappings) --
-map('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move Line Down' })
-map('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move Line Up' })
 
+-- -- Visual Mode Moves (The Primeagen mappings) --
+map('v', '<A-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move Line Down' })
+map('v', '<A-k>', ':m \'<-2<CR>gv=gv', { desc = 'Move Line Up' })
 map('v', '<', '<gv', { desc = 'Indent Left' })
 map('v', '>', '>gv', { desc = 'Indent Right' })
 map('x', '<leader>p', '"_dP', { desc = 'Paste over selection (Keep clipboard)' })
@@ -75,25 +75,9 @@ map('n', '<leader>cg', function()
     require('neogen').generate()
 end, { desc = 'Generate Docs (Neogen)' })
 
-vim.keymap.set('n', 'K', function()
-    -- 1. Try to load the plugin safely
-    local has_plugin, pretty_hover = pcall(require, 'pretty_hover')
-
-    if has_plugin then
-        -- 2. If plugin loads, try to run its hover function safely
-        local success, err = pcall(pretty_hover.hover)
-
-        -- 3. If the plugin crashes during execution, catch it and fallback
-        if not success then
-            -- Optional: Print a small warning so you know it failed
-            vim.notify('Pretty Hover failed: ' .. tostring(err), vim.log.levels.WARN)
-            vim.lsp.buf.hover()
-        end
-    else
-        -- 4. If the plugin isn't installed/found, use native hover immediately
-        vim.lsp.buf.hover()
-    end
-end, { desc = 'Hover (Smart Fallback)' })
+map('n', 'K', function()
+    vim.lsp.buf.hover()
+end, { desc = 'LSP Hover (via Blink)' })
 
 -- ========================================================================== --
 --                                 DEBUGGING                                  --
@@ -184,7 +168,20 @@ end, { desc = 'Find directory and open in Oil' })
 -- ========================================================================== --
 --                                 PLUGINS                                    --
 -- ========================================================================== --
+-- Todo comments
+vim.keymap.set('n', ']t', function()
+    require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
 
+vim.keymap.set('n', '[t', function()
+    require('todo-comments').jump_prev()
+end, { desc = 'Previous todo comment' })
+
+-- You can also specify a list of valid jump keywords
+
+vim.keymap.set('n', ']t', function()
+    require('todo-comments').jump_next { keywords = { 'ERROR', 'WARNING' } }
+end, { desc = 'Next error/warning todo comment' })
 -- -- Git (Neogit) --
 map('n', '<leader>gg', '<cmd>Neogit<cr>', { desc = 'Open Neogit' })
 -- Git (LazyGit)
@@ -206,7 +203,7 @@ map(
 )
 map('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', { desc = 'Trouble: Loclist' })
 map('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Trouble: Quickfix' })
-map('n', '<leader>xt', '<cmd>TodoQuickFix<CR>', { desc = "Trouble: Todo's" })
+map('n', '<leader>xt', '<cmd>TodoQuickFix<CR>', { desc = 'Trouble: Todo\'s' })
 
 -- -- Noice --
 map('n', '<leader>nd', '<cmd>NoiceDismiss<CR>', { desc = 'Dismiss Notifications' })

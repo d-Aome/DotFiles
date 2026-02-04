@@ -1,7 +1,6 @@
 local o = vim.o
 local g = vim.g
 local opt = vim.opt
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 g.have_nerd_font = true
 o.laststatus = 3
