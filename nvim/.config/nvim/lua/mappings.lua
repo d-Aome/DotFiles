@@ -75,9 +75,25 @@ map('n', '<leader>cg', function()
     require('neogen').generate()
 end, { desc = 'Generate Docs (Neogen)' })
 
-map('n', 'K', function()
-    vim.lsp.buf.hover()
-end, { desc = 'LSP Hover (via Blink)' })
+vim.keymap.set('n', 'K', function()
+    -- 1. Try to load the plugin safely
+    local has_plugin, pretty_hover = pcall(require, 'pretty_hover')
+
+    if has_plugin then
+        -- 2. If plugin loads, try to run its hover function safely
+        local success, err = pcall(pretty_hover.hover)
+
+        -- 3. If the plugin crashes during execution, catch it and fallback
+        if not success then
+            -- Optional: Print a small warning so you know it failed
+            vim.notify('Pretty Hover failed: ' .. tostring(err), vim.log.levels.WARN)
+            vim.lsp.buf.hover()
+        end
+    else
+        -- 4. If the plugin isn't installed/found, use native hover immediately
+        vim.lsp.buf.hover()
+    end
+end, { desc = 'Hover (Smart Fallback)' })
 
 -- ========================================================================== --
 --                                 DEBUGGING                                  --

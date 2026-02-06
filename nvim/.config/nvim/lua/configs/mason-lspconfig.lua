@@ -1,8 +1,8 @@
 -- local lspconfig = package.loaded["lspconfig"] -- pre nvim 0.11
-local lspconfig = require "nvchad.configs.lspconfig" -- nvim 0.11
+local lspconfig = require 'nvchad.configs.lspconfig' -- nvim 0.11
 
 -- List of servers to ignore during install
-local ignore_install = { "rust_analyzer" }
+local ignore_install = { 'rust_analyzer' }
 
 -- Helper function to find if value is in table.
 local function table_contains(table, value)
@@ -16,17 +16,17 @@ end
 
 -- Build a list of lsp servers to install minus the ignored list.
 local all_servers = {
-    "clangd",
-    "lua_ls",
-    "gopls",
-    "neocmake",
-    "html",
-    "cssls",
-    "ts_ls",
-    "jedi_language_server",
-    "ruff",
-    "bashls",
-    "vue_ls",
+    'clangd',
+    'lua_ls',
+    'gopls',
+    'neocmake',
+    'html',
+    'cssls',
+    'ts_ls',
+    'jedi_language_server',
+    'ruff',
+    'bashls',
+    'vue_ls',
 }
 
 for _, s in ipairs(lspconfig.servers) do
@@ -35,7 +35,7 @@ for _, s in ipairs(lspconfig.servers) do
     end
 end
 
-require("mason-lspconfig").setup {
+require('mason-lspconfig').setup {
     ensure_installed = all_servers,
     automatic_installation = false,
 }

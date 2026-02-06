@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good',      lazy = false },
+    { 'ThePrimeagen/vim-be-good', lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -52,7 +52,7 @@ return {
     {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
-        lazy = false,   -- This plugin is already lazy
+        lazy = false, -- This plugin is already lazy
         ft = 'rust',
         config = function()
             local mason_registry = require 'mason-registry'
@@ -155,7 +155,7 @@ return {
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
-        lazy = false,                                 -- Matches your original config
+        lazy = false, -- Matches your original config
         opts = require 'configs.oil',
         config = function(_, opts)
             ---@diagnostic disable-next-line: different-requires
@@ -276,6 +276,20 @@ return {
             require 'configs.guess-indent'
         end,
     },
+    {
+        'linux-cultist/venv-selector.nvim',
+        dependencies = {
+            { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
+        },
+        ft = 'python', -- Load when opening Python files
+        keys = {
+            { ',v', '<cmd>VenvSelect<cr>' }, -- Open picker on keymap
+        },
+        opts = { -- this can be an empty lua table - just showing below for clarity.
+            search = {}, -- if you add your own searches, they go here.
+            options = {}, -- if you add plugin options, they go here.
+        },
+    },
     -- ========================================================================== --
     --                               USER INTERFACE                               --
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --
@@ -316,6 +330,14 @@ return {
         },
         opts = function()
             return require('configs.noice').noice_opts
+        end,
+    },
+    {
+        'Fildo7525/pretty_hover',
+        event = 'LspAttach',
+        opts = require 'configs.pretty_hover',
+        config = function(_, opts)
+            require('pretty_hover').setup(opts)
         end,
     },
 }

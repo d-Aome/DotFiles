@@ -42,7 +42,14 @@ lspconfig.servers = {
 }
 
 -- list of servers configured with default config.
-local default_servers = { 'html', 'cssls', 'jedi_language_server', 'ruff', 'bashls', 'zls' }
+local default_servers = {
+    'html',
+    'cssls',
+    'ruff',
+    'bashls',
+    'zls',
+    'jedi_language_server',
+}
 
 -- lsps with default config
 for _, lsp in ipairs(default_servers) do

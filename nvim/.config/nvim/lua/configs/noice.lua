@@ -1,22 +1,23 @@
 local M = {}
 M.noice_opts = {
+    notify = { enabled = false },
     views = {
         cmdline_popup = {
             position = {
-                row = "40%", -- Adjust this percentage to move it up or down
-                col = "50%",
+                row = '40%', -- Adjust this percentage to move it up or down
+                col = '50%',
             },
             size = {
                 width = 60,
-                height = "auto",
+                height = 'auto',
             },
         },
     },
     popupmenu = {
-        relative = "editor",
+        relative = 'editor',
         position = {
-            row = "53%", -- Positions the suggestion menu just below the centered cmdline
-            col = "50%",
+            row = '53%', -- Positions the suggestion menu just below the centered cmdline
+            col = '50%',
         },
     },
     lsp = {
@@ -43,16 +44,16 @@ M.noice_opts = {
 }
 
 M.notify_config = function()
-    require("notify").setup {
-        background_colour = "#000000",
+    require('notify').setup {
+        background_colour = '#000000',
 
         -- local buf = an integer
         -- local notification = a table with the notify.Record format
         highlights = {
-            title = "NotifyTitle",
-            icon = "NotifyIcon",
-            border = "NotifyBorder",
-            body = "NotifyBody",
+            title = 'NotifyTitle',
+            icon = 'NotifyIcon',
+            border = 'NotifyBorder',
+            body = 'NotifyBody',
         },
         merge_duplicates = true,
     }
