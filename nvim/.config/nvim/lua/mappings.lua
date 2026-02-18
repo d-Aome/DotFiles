@@ -21,7 +21,7 @@ wk.add {
 -- ========================================================================== --
 
 -- -- File & Window Management --
-map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
+map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file', silent = false })
 map('n', '<leader>q', '<cmd>close<cr>', { desc = 'Window: Close' }) -- Changed from <leader>x to avoid conflict
 map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 
@@ -229,6 +229,9 @@ map('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'Show All Keymaps' })
 map('n', '<leader>wk', function()
     vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ')
 end, { desc = 'WhichKey Lookup' })
+-- Overseer --
+
+map('n', '<leader>to', '<cmd>OverseerToggle <CR>', { desc = 'Toggle Overseer Output Buffer' })
 
 -- ========================================================================== --
 --                                 HARPOON                                    --
