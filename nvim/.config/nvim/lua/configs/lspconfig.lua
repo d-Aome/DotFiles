@@ -39,6 +39,7 @@ lspconfig.servers = {
     'gopls',
     'vue_ls',
     'rust_analyzer',
+    'asm_lsp',
 }
 
 -- list of servers configured with default config.
@@ -168,7 +169,13 @@ vim.lsp.config('lua_ls', { -- nvim 0.11
         },
     },
 })
-
+-- asm lsp
+vim.lsp.config('asm_lsp', {
+    filetypes = { 'asm', 's', 'S' },
+    root_dir = function(fname)
+        return lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+    end,
+})
 -- Neocmake with formatting enabled
 vim.lsp.config('neocmake', {
     on_attach = on_attach,

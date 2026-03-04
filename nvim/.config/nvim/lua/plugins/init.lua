@@ -144,6 +144,18 @@ return {
     --                     Workflow Enhancements & Helper Tools                   --
     -- ========================================================================== --
     {
+        'ThePrimeagen/refactoring.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
+        lazy = false,
+        opts = {},
+        config = function()
+            require('refactoring').setup()
+        end,
+    },
+    {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
         cmd = 'Telescope',
@@ -246,9 +258,12 @@ return {
         lazy = true,
         dependencies = {
             -- Creates a beautiful debugger UI
-            'rcarriga/nvim-dap-ui',
-            -- Required dependency for nvim-dap-ui
-            'nvim-neotest/nvim-nio',
+            {
+                'igorlfs/nvim-dap-view',
+                ---@module 'dap-view'
+                ---@type dapview.Config
+                opts = {},
+            },
 
             -- Installs the debug adapters for you
             'williamboman/mason.nvim',

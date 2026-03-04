@@ -116,10 +116,9 @@ end, { desc = 'Debug: Toggle Breakpoint' })
 map('n', '<leader>B', function()
     require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
 end, { desc = 'Debug: Set Breakpoint' })
-map('n', '<F7>', function()
-    require('dapui').toggle()
-end, { desc = 'Debug: See last session result.' })
--- ========================================================================== --
+vim.keymap.set('n', '<F7>', function()
+    require('dap-view').toggle()
+end, { desc = 'Debug: Toggle DAP View' }) -- ========================================================================== --
 --                               TELESCOPE                                    --
 -- ========================================================================== --
 local builtin = require 'telescope.builtin'
@@ -232,7 +231,19 @@ end, { desc = 'WhichKey Lookup' })
 -- Overseer --
 
 map('n', '<leader>to', '<cmd>OverseerToggle <CR>', { desc = 'Toggle Overseer Output Buffer' })
+-- Refactoring
 
+map('x', '<leader>re', ':Refactor extract ')
+map('x', '<leader>rf', ':Refactor extract_to_file ')
+
+map('x', '<leader>rv', ':Refactor extract_var ')
+
+map({ 'n', 'x' }, '<leader>ri', ':Refactor inline_var')
+
+map('n', '<leader>rI', ':Refactor inline_func')
+
+map('n', '<leader>rb', ':Refactor extract_block')
+map('n', '<leader>rbf', ':Refactor extract_block_to_file')
 -- ========================================================================== --
 --                                 HARPOON                                    --
 -- ========================================================================== --
