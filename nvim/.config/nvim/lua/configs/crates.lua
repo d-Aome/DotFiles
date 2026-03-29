@@ -1,4 +1,4 @@
-require("crates").setup {
+require('crates').setup {
     completion = {
         cmp = {
             enabled = true,
@@ -6,7 +6,7 @@ require("crates").setup {
         crates = {
             enabled = true,
             max_results = 15,
-            min_chars = 2,
+            min_chars = 0,
         },
     },
     lsp = {

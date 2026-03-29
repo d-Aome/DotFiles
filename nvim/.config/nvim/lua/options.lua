@@ -1,6 +1,7 @@
 local o = vim.o
 local g = vim.g
 local opt = vim.opt
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 g.have_nerd_font = true
 o.laststatus = 3
@@ -37,7 +38,6 @@ o.undofile = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 o.ignorecase = true
 o.smartcase = true
-
 -- Keep signcolumn on by default
 o.signcolumn = 'yes'
 
@@ -79,6 +79,9 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
+
+opt.conceallevel = 2
+opt.hlsearch = false
 
 local is_windows = vim.fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'

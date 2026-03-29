@@ -11,11 +11,15 @@ M.base46 = {
     hl_add = {
         LazyGitFloat = { bg = 'black' },
         LazyGitBorder = { bg = 'None' },
+        PrettyHoverBorder = {
+            fg = '#56b6c2',
+            bg = '#1e222a',
+        },
     },
     hl_override = {
         Comment = { italic = true },
         ['@comment'] = { italic = true },
-        Normal = { bg = 'NONE' },   -- The main text window
+        Normal = { bg = 'NONE' }, -- The main text window
 
         NormalNC = { bg = 'NONE' }, -- "Non-Current" windows (splits that aren't active)
 
@@ -25,7 +29,7 @@ M.base46 = {
 
         -- 4. (Optional) Clean up other main-editor elements to match transparency
         EndOfBuffer = { bg = 'NONE' }, -- The tildes (~) at the end of the file
-        Folded = { bg = 'NONE' },      -- Folded code blocks        FloatBorder = {
+        Folded = { bg = 'NONE' }, -- Folded code blocks        FloatBorder = {
 
         BlinkCmpMenu = { bg = 'black', fg = 'white' },
         BlinkCmpMenuBorder = {
@@ -33,6 +37,8 @@ M.base46 = {
         },
         BlinkCmpDoc = { bg = '#1e222a' },
         BlinkCmpDocBorder = { fg = '#56b6c2', bg = '#1e222a' },
+        BlinkCmpSignatureHelp = { bg = 'black' },
+        BlinkCmpSignatureHelpBorder = { fg = '#56b6c2', bg = '#1e222a' },
     },
 }
 
@@ -89,7 +95,7 @@ M.ui = {
 }
 
 M.lsp = {
-    signature = true,
+    signature = false,
 }
 
 return M

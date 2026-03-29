@@ -21,6 +21,7 @@ return {
             'out/',
             'build/',
             'dest/',
+            'Debug/',
             '*.o',
             '*.so',
             '*.a',
@@ -31,6 +32,7 @@ return {
             '*.bmp',
             '*.tiff',
             'vendor/',
+            'target/',
         },
         mappings = {
             n = { ['q'] = require('telescope.actions').close },

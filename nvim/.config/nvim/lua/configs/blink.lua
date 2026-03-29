@@ -1,7 +1,6 @@
 return {
     -- Your custom nvim-cmp style mappings
     snippets = {
-
         preset = 'luasnip',
     },
     appearance = { nerd_font_variant = 'normal' },
@@ -11,9 +10,20 @@ return {
         },
         list = { selection = { preselect = true, auto_insert = false } },
         documentation = {
+            draw = function(opts)
+                if opts.item and opts.item.documentation and opts.item.documentation.value then
+                    local out = require('pretty_hover.parser').parse(opts.item.documentation.value)
+                    opts.item.documentation.value = out:string()
+                end
+
+                opts.default_implementation(opts)
+            end,
             auto_show = true,
             auto_show_delay_ms = 200,
-            window = { border = 'rounded' },
+            window = {
+                border = 'rounded',
+                max_width = 80,
+            },
         },
         ghost_text = { enabled = true },
         accept = {
@@ -22,11 +32,16 @@ return {
         menu = require('nvchad.blink').menu,
     },
     fuzzy = {
-        implementation = 'prefer_rust_with_warning',
+        frecency = {
+            enabled = true,
+            path = vim.fn.stdpath 'state' .. '/blink/cmp/frecency.dat',
+        },
+        implementation = 'rust',
         sorts = {
-            'score',
+            'exact',
             'sort_text',
-            'label',
+            'score',
+            'kind',
         },
     },
     keymap = {
@@ -58,7 +73,6 @@ return {
             ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
         },
-
         completion = {
             list = {
                 selection = {
@@ -71,6 +85,18 @@ return {
             },
             menu = { auto_show = true },
         },
+        sources = function()
+            local type = vim.fn.getcmdtype()
+            -- Search forward and backward
+            if type == '/' or type == '?' then
+                return { 'buffer' }
+            end
+            -- Commands
+            if type == ':' then
+                return { 'cmdline' }
+            end
+            return {}
+        end,
     },
 
     sources = {
@@ -78,10 +104,10 @@ return {
         providers = {
             snippets = {
                 min_keyword_length = 1,
-                score_offset = 4,
+                score_offset = 10,
             },
             lsp = {
-                min_keyword_length = 2,
+                min_keyword_length = 1,
                 score_offset = 3,
             },
             path = {

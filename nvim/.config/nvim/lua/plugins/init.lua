@@ -43,6 +43,7 @@ return {
     },
     {
         'Saghen/blink.cmp',
+        dependencies = { 'Fildo7525/pretty_hover' },
         opts = require 'configs.blink',
     },
     {
@@ -101,7 +102,6 @@ return {
         event = 'BufRead',
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
-            event = 'BufRead',
         },
         opts = {
             multiwindow = true,
@@ -115,10 +115,23 @@ return {
     },
     {
         'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
+        ft = { 'markdown', 'codecompanion', 'Avante' },
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
-        opts = {},
+        opts = {
+            latex = {
+                enabled = true,
+                converter = 'latex2text',
+            },
+            win_options = {
+                conceallevel = { default = 3, rendered = 3 },
+                wrap = { default = true, rendered = true },
+                -- Add these to improve Java/Rust doc readability:
+                linebreak = { default = true, rendered = true },
+                breakindent = { default = true, rendered = true },
+            },
+        },
     },
     -- ========================================================================== --
     --                                  NONE-LS                                   --
@@ -144,6 +157,31 @@ return {
     --                     Workflow Enhancements & Helper Tools                   --
     -- ========================================================================== --
     {
+        'Civitasv/cmake-tools.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/overseer.nvim',
+            {
+                'akinsho/toggleterm.nvim',
+                version = '*',
+                opts = { --[[ things you want to change go here]]
+                },
+            },
+        },
+        lazy = false,
+        config = function()
+            local cmake_config = require 'configs.cmake-tools'
+            require('cmake-tools').setup(cmake_config.get_opts())
+        end,
+    },
+    {
+        'nvim-java/nvim-java',
+        config = function()
+            require('java').setup()
+            vim.lsp.enable 'jdtls'
+        end,
+    },
+    {
         'ThePrimeagen/refactoring.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
@@ -163,7 +201,6 @@ return {
             return require 'configs.telescope'
         end,
     },
-
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
@@ -185,6 +222,9 @@ return {
             'LazyGitFilterCurrentFile',
         },
         dependencies = { 'nvim-lua/plenary.nvim' },
+    },
+    {
+        'sindrets/diffview.nvim',
     },
     {
         'NeoGitOrg/neogit',
@@ -350,9 +390,11 @@ return {
     {
         'Fildo7525/pretty_hover',
         event = 'LspAttach',
-        opts = require 'configs.pretty_hover',
-        config = function(_, opts)
-            require('pretty_hover').setup(opts)
-        end,
+        opts = {
+            border = 'rounded',
+            max_width = 120,
+            wrap_at = 200,
+            max_height = 20,
+        },
     },
 }

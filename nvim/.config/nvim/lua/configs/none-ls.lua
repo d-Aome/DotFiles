@@ -95,13 +95,17 @@ null_ls.setup {
         -- C/C++
         null_ls.builtins.formatting.clang_format.with {
             extra_args = {
-                '-style={ \
+                '--style=file',
+                '--fallback-style={ \
                 IndentWidth: 4, \
                 TabWidth: 4, \
                 UseTab: Never, \
                 AccessModifierOffset: 0, \
                 IndentAccessModifiers: true, \
-                PackConstructorInitializers: Never}',
+                PackConstructorInitializers: Never, \
+                PointerAlignment: Left \
+                ReferenceAlignment: Right \
+                SortIncludes: false }',
             },
         },
         -- Go

@@ -25,6 +25,10 @@ map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file', silent = fal
 map('n', '<leader>q', '<cmd>close<cr>', { desc = 'Window: Close' }) -- Changed from <leader>x to avoid conflict
 map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 
+-- -- Navigation between Buffer's --
+map('n', '<leader>nb', '<cmd>bn<CR>', { desc = 'Go to [N]ext [B]uffer' })
+map('n', '<leader>pb', '<cmd>bp<CR>', { desc = 'Go to [P]revious [B]uffer' })
+
 -- -- Navigation & Centering --
 map({ 'n', 'v' }, '<C-d>', '<C-d>zz', { desc = 'Jump Down Half Page (Center)' })
 map({ 'n', 'v' }, '<C-u>', '<C-u>zz', { desc = 'Jump Up Half Page (Center)' })
@@ -75,7 +79,7 @@ map('n', '<leader>cg', function()
     require('neogen').generate()
 end, { desc = 'Generate Docs (Neogen)' })
 
-vim.keymap.set('n', 'K', function()
+map('n', 'K', function()
     -- 1. Try to load the plugin safely
     local has_plugin, pretty_hover = pcall(require, 'pretty_hover')
 
@@ -156,7 +160,7 @@ end, { desc = 'Search Neovim Config' })
 local actions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
 
-vim.keymap.set('n', '<leader>fo', function()
+map('n', '<leader>fo', function()
     builtin.find_files {
         prompt_title = '< Open Directory in Oil >',
         -- This command forces Telescope to only show directories

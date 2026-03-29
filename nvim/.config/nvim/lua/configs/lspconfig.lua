@@ -40,6 +40,7 @@ lspconfig.servers = {
     'vue_ls',
     'rust_analyzer',
     'asm_lsp',
+    'jedi_language_server',
 }
 
 -- list of servers configured with default config.
@@ -49,7 +50,7 @@ local default_servers = {
     'ruff',
     'bashls',
     'zls',
-    'jedi_language_server',
+    'glsl_analyzer',
 }
 
 -- lsps with default config
@@ -188,4 +189,13 @@ vim.lsp.config('neocmake', {
         scan_cmake_in_package = true,
         semantic_token = true,
     },
+})
+
+-- Jedi lsp servers
+vim.lsp.config('jedi_language_server', {
+    on_attach = on_attach,
+    int_options = {
+        markupKindPrefered = 'markdown',
+    },
+    capabilities = capabilities,
 })
