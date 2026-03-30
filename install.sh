@@ -10,13 +10,13 @@ if [[ -d "$DIR" ]]; then
     rm -rf "$DIR"
 fi
 # Get Dotfiles config
-git clone git@github.com:d-Aome/DotFiles.git $DIR
+git clone git@github.com:d-Aome/DotFiles.git "$DIR"
 
 # Install tpm plugin
 if [[ -d "$TPM_DIR" ]]; then
     rm -rf "$TPM_DIR"
 fi
-git clone https://github.com/tmux-plugins/tpm $TPM_DIR
+git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
 
 #Install Catpuuccin for tmux
 if  [[ -d "$CAT_DIR" ]]; then

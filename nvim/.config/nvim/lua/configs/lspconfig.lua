@@ -51,6 +51,7 @@ local default_servers = {
     'bashls',
     'zls',
     'glsl_analyzer',
+    'racket-langserver',
 }
 
 -- lsps with default config
