@@ -41,6 +41,7 @@ lspconfig.servers = {
     'rust_analyzer',
     'asm_lsp',
     'jedi_language_server',
+    'racket_langserver',
 }
 
 -- list of servers configured with default config.
@@ -51,7 +52,6 @@ local default_servers = {
     'bashls',
     'zls',
     'glsl_analyzer',
-    'racket-langserver',
 }
 
 -- lsps with default config
@@ -153,10 +153,6 @@ vim.lsp.config('lua_ls', { -- nvim 0.11
 
     settings = {
         Lua = {
-            diagnostics = {
-                enable = false, -- Disable all diagnostics from lua_ls
-                -- globals = { "vim" },
-            },
             workspace = {
                 library = {
                     vim.fn.expand '$VIMRUNTIME/lua',
@@ -195,8 +191,24 @@ vim.lsp.config('neocmake', {
 -- Jedi lsp servers
 vim.lsp.config('jedi_language_server', {
     on_attach = on_attach,
-    int_options = {
+    init_options = {
         markupKindPrefered = 'markdown',
     },
     capabilities = capabilities,
 })
+
+vim.lsp.config('racket_langserver', {
+    cmd = { 'racket', '--lib', 'racket-langserver' },
+    filetypes = { 'racket', 'scheme' },
+    single_file_support = true,
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+    diagnostics = {
+        underline = {
+            enabled = false,
+        },
+    },
+})
+
+vim.lsp.enable 'racket_langserver'

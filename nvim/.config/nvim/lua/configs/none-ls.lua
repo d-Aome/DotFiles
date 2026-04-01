@@ -103,8 +103,6 @@ null_ls.setup {
                 AccessModifierOffset: 0, \
                 IndentAccessModifiers: true, \
                 PackConstructorInitializers: Never, \
-                PointerAlignment: Left \
-                ReferenceAlignment: Right \
                 SortIncludes: false }',
             },
         },

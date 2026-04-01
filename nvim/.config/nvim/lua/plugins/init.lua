@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good', lazy = false },
+    { 'ThePrimeagen/vim-be-good',      lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -53,7 +53,7 @@ return {
     {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
-        lazy = false, -- This plugin is already lazy
+        lazy = false,   -- This plugin is already lazy
         ft = 'rust',
         config = function()
             local mason_registry = require 'mason-registry'
@@ -204,7 +204,7 @@ return {
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
-        lazy = false, -- Matches your original config
+        lazy = false,                                 -- Matches your original config
         opts = require 'configs.oil',
         config = function(_, opts)
             ---@diagnostic disable-next-line: different-requires
@@ -289,8 +289,9 @@ return {
         ---@module 'overseer'
         ---@type overseer.SetupOpts
         opts = {},
-        config = function()
+        config = function(_)
             require('overseer').setup()
+            require 'configs.overseer-templates'
         end,
     },
     {
@@ -336,13 +337,13 @@ return {
         dependencies = {
             { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
         },
-        ft = 'python', -- Load when opening Python files
+        ft = 'python',                                                                                      -- Load when opening Python files
         keys = {
-            { ',v', '<cmd>VenvSelect<cr>' }, -- Open picker on keymap
+            { ',v', '<cmd>VenvSelect<cr>' },                                                                -- Open picker on keymap
         },
-        opts = { -- this can be an empty lua table - just showing below for clarity.
-            search = {}, -- if you add your own searches, they go here.
-            options = {}, -- if you add plugin options, they go here.
+        opts = {                                                                                            -- this can be an empty lua table - just showing below for clarity.
+            search = {},                                                                                    -- if you add your own searches, they go here.
+            options = {},                                                                                   -- if you add plugin options, they go here.
         },
     },
     -- ========================================================================== --
@@ -356,16 +357,6 @@ return {
         opts = require 'configs.todo-comments',
         config = function(_, opts)
             require('todo-comments').setup(opts)
-        end,
-    },
-    {
-        'rachartier/tiny-inline-diagnostic.nvim',
-        event = 'VeryLazy',
-        priority = 1000,
-        opts = require 'configs.inline-diagnostics',
-        config = function(_, opts)
-            require('tiny-inline-diagnostic').setup(opts)
-            vim.diagnostic.config { virtual_text = false }
         end,
     },
     {
