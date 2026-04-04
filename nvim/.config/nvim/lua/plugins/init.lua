@@ -80,6 +80,15 @@ return {
             require 'configs.crates'
         end,
     },
+
+    {
+        'jamespeilunli/nvim-flatbuffers',
+        event = 'LspAttach',
+        config = function()
+            require('flatbuffers').setup()
+        end,
+    },
+
     -- ========================================================================== --
     --                                 TREESITTER                                 --
     --             Syntax Highlighting, Indentation & Language Parsers            --
