@@ -42,6 +42,7 @@ lspconfig.servers = {
     'asm_lsp',
     'jedi_language_server',
     'racket_langserver',
+    'arduino_language_server',
 }
 
 -- list of servers configured with default config.
@@ -212,3 +213,25 @@ vim.lsp.config('racket_langserver', {
 })
 
 vim.lsp.enable 'racket_langserver'
+
+vim.lsp.config('arduino_language_server', {
+    cmd = {
+        'arduino-language-server',
+        '-clangd',
+        '/usr/bin/clangd',
+        '-cli-config',
+        vim.fn.expand '~/.arduino15/arduino-cli.yaml',
+        '-fqbn',
+        'arduino:esp32:nano_nora',
+    },
+    capabilities = {
+        textDocument = {
+            semantic_tokens = vim.NIL,
+        },
+        workspace = {
+            semantic_Tokens = vim.NIL,
+        },
+    },
+    on_attach = on_attach,
+    on_init = on_init,
+})

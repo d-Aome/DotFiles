@@ -100,23 +100,19 @@ return {
     },
 
     sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
             snippets = {
-                min_keyword_length = 1,
-                score_offset = 10,
-            },
-            lsp = {
-                min_keyword_length = 1,
-                score_offset = 3,
-            },
-            path = {
-                min_keyword_length = 2,
+                min_keyword_length = 0,
                 score_offset = 2,
             },
-            buffer = {
+            lsp = {
+                min_keyword_length = 0,
+                score_offset = 4,
+            },
+            path = {
                 min_keyword_length = 4,
-                score_offset = 1,
+                score_offset = 2,
             },
             lazydev = { module = 'lazydev.integrations.blink', score_offset = 5 },
         },

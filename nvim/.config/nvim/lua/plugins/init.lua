@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good',      lazy = false },
+    { 'ThePrimeagen/vim-be-good', lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -53,7 +53,7 @@ return {
     {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
-        lazy = false,   -- This plugin is already lazy
+        lazy = false, -- This plugin is already lazy
         ft = 'rust',
         config = function()
             local mason_registry = require 'mason-registry'
@@ -75,6 +75,7 @@ return {
     {
         'saecki/crates.nvim',
         ft = { 'toml' },
+        tag = 'stable',
         config = function()
             require 'configs.crates'
         end,
@@ -90,6 +91,7 @@ return {
             { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main', lazy = true },
         },
         branch = 'main',
+        coimmit = '90cd6580e720caedacb91fdd587b747a6e77d61f',
         build = ':TSUpdate',
         lazy = false,
         event = { 'BufReadPost', 'BufNewFile' },
@@ -204,7 +206,7 @@ return {
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
-        lazy = false,                                 -- Matches your original config
+        lazy = false, -- Matches your original config
         opts = require 'configs.oil',
         config = function(_, opts)
             ---@diagnostic disable-next-line: different-requires
@@ -337,13 +339,13 @@ return {
         dependencies = {
             { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
         },
-        ft = 'python',                                                                                      -- Load when opening Python files
+        ft = 'python', -- Load when opening Python files
         keys = {
-            { ',v', '<cmd>VenvSelect<cr>' },                                                                -- Open picker on keymap
+            { ',v', '<cmd>VenvSelect<cr>' }, -- Open picker on keymap
         },
-        opts = {                                                                                            -- this can be an empty lua table - just showing below for clarity.
-            search = {},                                                                                    -- if you add your own searches, they go here.
-            options = {},                                                                                   -- if you add plugin options, they go here.
+        opts = { -- this can be an empty lua table - just showing below for clarity.
+            search = {}, -- if you add your own searches, they go here.
+            options = {}, -- if you add plugin options, they go here.
         },
     },
     -- ========================================================================== --

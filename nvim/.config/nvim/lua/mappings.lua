@@ -83,18 +83,20 @@ map('n', 'K', function()
     -- 1. Try to load the plugin safely
     local has_plugin, pretty_hover = pcall(require, 'pretty_hover')
 
-    if has_plugin then
-        -- 2. If plugin loads, try to run its hover function safely
+    if vim.fn.expand '%:t' == 'Cargo.toml' and require('crates').popup_available() then
+        -- 1. Priority: Cargo.toml popups
+        require('crates').show_popup()
+    elseif has_plugin then
+        -- 2. Try the Pretty Hover plugin
         local success, err = pcall(pretty_hover.hover)
 
-        -- 3. If the plugin crashes during execution, catch it and fallback
         if not success then
-            -- Optional: Print a small warning so you know it failed
+            -- 3. Fallback if the plugin exists but crashes
             vim.notify('Pretty Hover failed: ' .. tostring(err), vim.log.levels.WARN)
             vim.lsp.buf.hover()
         end
     else
-        -- 4. If the plugin isn't installed/found, use native hover immediately
+        -- 4. Default: Standard LSP hover
         vim.lsp.buf.hover()
     end
 end, { desc = 'Hover (Smart Fallback)' })
