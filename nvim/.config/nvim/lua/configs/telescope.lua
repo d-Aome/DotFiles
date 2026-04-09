@@ -33,6 +33,7 @@ return {
             '*.tiff',
             'vendor/',
             'target/',
+            'generated/',
         },
         mappings = {
             n = { ['q'] = require('telescope.actions').close },

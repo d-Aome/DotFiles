@@ -1,7 +1,7 @@
 require 'nvchad.autocmds'
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'help', 'man' },
+    pattern = { 'help', 'man', 'markdown', 'text' },
     group = vim.api.nvim_create_augroup('OpaqueManHelp', { clear = true }),
     callback = function()
         -- 1. Disable pseudo-transparency (for floating windows)

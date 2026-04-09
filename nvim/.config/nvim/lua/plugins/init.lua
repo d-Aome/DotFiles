@@ -357,6 +357,7 @@ return {
             options = {}, -- if you add plugin options, they go here.
         },
     },
+
     -- ========================================================================== --
     --                               USER INTERFACE                               --
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --
@@ -398,5 +399,14 @@ return {
             wrap_at = 200,
             max_height = 20,
         },
+    },
+    {
+        'rachartier/tiny-inline-diagnostic.nvim',
+        event = 'VeryLazy',
+        priority = 1000,
+        config = function()
+            require('tiny-inline-diagnostic').setup()
+            vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
+        end,
     },
 }

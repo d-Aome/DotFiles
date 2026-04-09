@@ -29,6 +29,8 @@ map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 map('n', '<leader>nb', '<cmd>bn<CR>', { desc = 'Go to [N]ext [B]uffer' })
 map('n', '<leader>pb', '<cmd>bp<CR>', { desc = 'Go to [P]revious [B]uffer' })
 
+-- better marks navigations
+map('n', '\'', '`', { desc = 'Jump to exact mark position' })
 -- -- Navigation & Centering --
 map({ 'n', 'v' }, '<C-d>', '<C-d>zz', { desc = 'Jump Down Half Page (Center)' })
 map({ 'n', 'v' }, '<C-u>', '<C-u>zz', { desc = 'Jump Up Half Page (Center)' })

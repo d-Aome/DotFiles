@@ -1,37 +1,5 @@
 local null_ls = require 'null-ls'
-
 local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
-local async_formatting = function(bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
-
-    vim.lsp.buf_request(
-        bufnr,
-        'textDocument/formatting',
-        vim.lsp.util.make_formatting_params {},
-        function(err, res, ctx)
-            if err then
-                local err_msg = type(err) == 'string' and err or err.message
-                -- you can modify the log message / level (or ignore it completely)
-                vim.notify('formatting: ' .. err_msg, vim.log.levels.WARN)
-                return
-            end
-
-            -- don't apply results if buffer is unloaded or has been modified
-            if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, 'modified') then
-                return
-            end
-
-            if res then
-                local client = vim.lsp.get_client_by_id(ctx.client_id)
-                vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or 'utf-16')
-                vim.api.nvim_buf_call(bufnr, function()
-                    vim.cmd 'silent noautocmd update'
-                end)
-            end
-        end
-    )
-end
 
 require('mason-null-ls').setup {
     ensure_installed = {
@@ -42,11 +10,12 @@ require('mason-null-ls').setup {
         'golines',
         'prettier',
         'stylua',
-
+        'black',
         -- Linters
         'luacheck',
         'shellcheck',
         'eslint_d',
+        'ruff',
     },
 
     automatic_installation = true,
@@ -62,7 +31,7 @@ null_ls.setup {
         -- ========================================================================== --
         --                                  CODE_ACTIONS                             --
         -- ========================================================================== --
-        require 'none-ls.code_actions.eslint_d',
+        require 'none-ls.code_actions.eslint',
         require 'none-ls-shellcheck.code_actions',
         -- ========================================================================== --
         --                                  FORMATTING                                --
@@ -92,6 +61,9 @@ null_ls.setup {
                 'all',
             },
         },
+        -- Python
+        require 'none-ls.formatting.ruff_format',
+
         -- C/C++
         null_ls.builtins.formatting.clang_format.with {
             extra_args = {
@@ -126,16 +98,16 @@ null_ls.setup {
         require 'none-ls-shellcheck.diagnostics',
 
         -- JS / TS / Vue (Handles all standard web filetypes automatically)
-
-        require('none-ls.diagnostics.eslint_d').with {
-
+        require('none-ls.diagnostics.eslint').with {
             filetypes = { 'javascript', 'javascriptreact', 'vue' },
         },
+        -- Python
+        require 'none-ls.diagnostics.ruff',
     },
     root_dir = require('null-ls.utils').root_pattern('.null-ls-root', 'Makefile', '.git'),
-    diagnostics_format = '[#{c}] #{m} (#{s})',
+    diagnostics_format = '',
     on_attach = function(client, bufnr)
-        if client.supports_method 'textDocument/formatting' then
+        if client:supports_method 'textDocument/formatting' then
             vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
             vim.api.nvim_create_autocmd('BufWritePre', {
                 group = augroup,

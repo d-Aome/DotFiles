@@ -121,6 +121,7 @@ vim.lsp.config('clangd', { -- nvim 0.11
     on_init = on_init,
     capabilities = capabilities,
 })
+
 -- Golang
 vim.lsp.config('gopls', { -- nvim 0.11
     on_attach = function(client, bufnr)
@@ -168,6 +169,7 @@ vim.lsp.config('lua_ls', { -- nvim 0.11
         },
     },
 })
+
 -- asm lsp
 vim.lsp.config('asm_lsp', {
     filetypes = { 'asm', 's', 'S' },
