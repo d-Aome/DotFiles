@@ -30,6 +30,9 @@ vim.schedule(function()
     o.clipboard = 'unnamedplus'
 end)
 
+vim.diagnostic.config {
+    { virtual_lines = { current_line = true }, virtual_text = false },
+}
 -- Enable break indent
 o.breakindent = true
 -- Save undo history
@@ -81,7 +84,6 @@ opt.softtabstop = 4
 opt.expandtab = true
 
 opt.conceallevel = 2
-opt.hlsearch = false
 
 local is_windows = vim.fn.has 'win32' ~= 0
 local sep = is_windows and '\\' or '/'

@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good', lazy = false },
+    { 'ThePrimeagen/vim-be-good',      lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -53,23 +53,11 @@ return {
     {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
-        lazy = false, -- This plugin is already lazy
+        lazy = false,   -- This plugin is already lazy
         ft = 'rust',
-        config = function()
-            local mason_registry = require 'mason-registry'
-            local codelldb = mason_registry.get_package 'codelldb'
-            local extension_path = require('mason.settings').current.install_root_dir .. '/extensions/'
-            local codelldb_path = extension_path .. 'adapter/codelldb'
-            -- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-            -- If you are on Linux, replace the line above with the line below:
-            local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
-            local cfg = require 'rustaceanvim.config'
-
-            vim.g.rustaceanvim = {
-                dap = {
-                    adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-                },
-            }
+        opts = require('configs.rust').opts,
+        config = function(_, opts)
+            vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, opts or {})
         end,
     },
     {
@@ -100,23 +88,11 @@ return {
             { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main', lazy = true },
         },
         branch = 'main',
-        coimmit = '90cd6580e720caedacb91fdd587b747a6e77d61f',
         build = ':TSUpdate',
         lazy = false,
         event = { 'BufReadPost', 'BufNewFile' },
         opts = require('configs.treesitter').opts,
         config = require('configs.treesitter').setup,
-    },
-
-    {
-        'nvim-treesitter/nvim-treesitter-context',
-        event = 'BufRead',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-        },
-        opts = {
-            multiwindow = true,
-        },
     },
     {
         'HiPhish/rainbow-delimiters.nvim',
@@ -161,6 +137,7 @@ return {
         },
         config = function()
             require 'configs.none-ls'
+            vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
         end,
     },
     -- ========================================================================== --
@@ -215,7 +192,7 @@ return {
     {
         'stevearc/oil.nvim',
         dependencies = { 'benomahony/oil-git.nvim' }, -- Added from your init.lua
-        lazy = false, -- Matches your original config
+        lazy = false,                                 -- Matches your original config
         opts = require 'configs.oil',
         config = function(_, opts)
             ---@diagnostic disable-next-line: different-requires
@@ -348,13 +325,13 @@ return {
         dependencies = {
             { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
         },
-        ft = 'python', -- Load when opening Python files
+        ft = 'python',                                                                                      -- Load when opening Python files
         keys = {
-            { ',v', '<cmd>VenvSelect<cr>' }, -- Open picker on keymap
+            { ',v', '<cmd>VenvSelect<cr>' },                                                                -- Open picker on keymap
         },
-        opts = { -- this can be an empty lua table - just showing below for clarity.
-            search = {}, -- if you add your own searches, they go here.
-            options = {}, -- if you add plugin options, they go here.
+        opts = {                                                                                            -- this can be an empty lua table - just showing below for clarity.
+            search = {},                                                                                    -- if you add your own searches, they go here.
+            options = {},                                                                                   -- if you add plugin options, they go here.
         },
     },
 
@@ -404,6 +381,7 @@ return {
         'rachartier/tiny-inline-diagnostic.nvim',
         event = 'VeryLazy',
         priority = 1000,
+        opts = {},
         config = function()
             require('tiny-inline-diagnostic').setup()
             vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics

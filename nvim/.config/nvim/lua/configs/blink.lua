@@ -103,7 +103,7 @@ return {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
             snippets = {
-                min_keyword_length = 0,
+                min_keyword_length = 2,
                 score_offset = 2,
             },
             lsp = {

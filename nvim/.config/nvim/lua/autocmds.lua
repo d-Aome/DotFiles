@@ -25,3 +25,9 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
 })
 
 vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
+
+vim.diagnostic.config {
+    -- This is the magic line that allows errors to show up without pressing Esc
+    update_in_insert = true,
+    virtual_text = true,
+}

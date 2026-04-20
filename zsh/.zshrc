@@ -85,7 +85,7 @@ function nvims() {
   NVIM_APPNAME=$config nvim $@
 }
 
-bindkey -s ^a "nvims\n"
+bindkey -s "^a" "nvims\n"
 # 11. Shell Integrations
 eval "$(tmuxifier init -)"
 eval "$(fzf --zsh)"
@@ -97,3 +97,6 @@ eval "$(starship init zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export VCPKG_ROOT=$HOME/vcpkg
+export PATH="$VCPKG_ROOT:$PATH"

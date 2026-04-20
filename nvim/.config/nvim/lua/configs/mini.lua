@@ -20,8 +20,8 @@ require('mini.ai').setup {
         -- Next/last textobjects
         -- NOTE: These override built-in LSP selection mappings on Neovim>=0.12
         -- Map LSP selection manually to use it (see `:h MiniAi.config`)
-        around_next = 'an',
-        inside_next = 'in',
+        around_next = 'aN',
+        inside_next = 'iN',
         around_last = 'al',
         inside_last = 'il',
 

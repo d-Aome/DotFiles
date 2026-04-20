@@ -19,7 +19,7 @@ wk.add {
 -- ========================================================================== --
 --                             CORE KEYBINDINGS                               --
 -- ========================================================================== --
-
+map('c', '<ESC>', '<C-c>')
 -- -- File & Window Management --
 map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file', silent = false })
 map('n', '<leader>q', '<cmd>close<cr>', { desc = 'Window: Close' }) -- Changed from <leader>x to avoid conflict
@@ -28,8 +28,7 @@ map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 -- -- Navigation between Buffer's --
 map('n', '<leader>nb', '<cmd>bn<CR>', { desc = 'Go to [N]ext [B]uffer' })
 map('n', '<leader>pb', '<cmd>bp<CR>', { desc = 'Go to [P]revious [B]uffer' })
-
--- better marks navigations
+-- In init.lua
 map('n', '\'', '`', { desc = 'Jump to exact mark position' })
 -- -- Navigation & Centering --
 map({ 'n', 'v' }, '<C-d>', '<C-d>zz', { desc = 'Jump Down Half Page (Center)' })
@@ -41,8 +40,6 @@ map('n', 'Y', 'y$', { desc = 'Yank to end of line' })
 map('n', 'J', 'mzJ`z', { desc = 'Join lines (keep cursor)' })
 map('n', '<leader>o', 'o<ESC>', { desc = 'Insert line below' })
 map('n', '<leader>O', 'O<ESC>', { desc = 'Insert line above' })
-map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move Line Down', silent = true })
-map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move Line Up', silent = true })
 
 -- -- Visual Mode Moves (The Primeagen mappings) --
 map('v', '<A-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move Line Down' })

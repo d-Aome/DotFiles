@@ -6,11 +6,11 @@ require('mason-null-ls').setup {
         -- Formatters
         'clang-format',
         'gofumpt',
-        'goimports-reviser',
         'golines',
         'prettier',
         'stylua',
         'black',
+        'goimports',
         -- Linters
         'luacheck',
         'shellcheck',
@@ -80,11 +80,9 @@ null_ls.setup {
         },
         -- Go
         null_ls.builtins.formatting.gofumpt,
-        null_ls.builtins.formatting.goimports_reviser.with {
-            extra_args = { '-rm-unused' },
-        },
+        null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.golines.with {
-            extra_args = { '--max-len=80' },
+            extra_args = { '--max-len=100' },
         },
 
         -- ========================================================================== --
