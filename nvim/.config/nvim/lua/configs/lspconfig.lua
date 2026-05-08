@@ -49,10 +49,10 @@ local default_servers = {
     'html',
     'cssls',
     'ruff',
+    'gopls',
     'bashls',
     'zls',
     'glsl_analyzer',
-    'gopls',
 }
 
 -- lsps with default config
@@ -122,6 +122,31 @@ vim.lsp.config('clangd', { -- nvim 0.11
     capabilities = capabilities,
 })
 
+-- Golang
+-- vim.lsp.config('gopls', { -- nvim 0.11
+--     on_attach = function(client, bufnr)
+--         client.server_capabilities.documentFormattingProvider = false
+--         client.server_capabilities.documentRangeFormattingProvider = false
+--         on_attach(client, bufnr)
+--     end,
+--     on_init = on_init,
+--     capabilities = capabilities,
+--     cmd = { 'gopls' },
+--     filetypes = { 'go', 'gomod', 'gotmpl', 'gowork' },
+--     -- root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"), -- pre nvim 0.11
+--     root_dir = require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git'), -- nvim 0.11
+--     settings = {
+--         gopls = {
+--             analyses = {
+--                 unusedparams = true,
+--             },
+--             completeUnimported = true,
+--             usePlaceholders = true,
+--             staticcheck = true,
+--         },
+--     },
+-- })
+
 -- lspconfig.lua_ls.setup({ -- pre nvim 0.11
 vim.lsp.config('lua_ls', { -- nvim 0.11
     on_attach = on_attach,
@@ -144,7 +169,6 @@ vim.lsp.config('lua_ls', { -- nvim 0.11
         },
     },
 })
-
 -- asm lsp
 vim.lsp.config('asm_lsp', {
     filetypes = { 'asm', 's', 'S' },
@@ -194,6 +218,12 @@ vim.lsp.enable 'racket_langserver'
 vim.lsp.config('arduino_language_server', {
     cmd = {
         'arduino-language-server',
+        '-clangd',
+        '/usr/bin/clangd',
+        '-cli-config',
+        vim.fn.expand '~/.arduino15/arduino-cli.yaml',
+        '-fqbn',
+        'arduino:esp32:nano_nora',
     },
     capabilities = {
         textDocument = {

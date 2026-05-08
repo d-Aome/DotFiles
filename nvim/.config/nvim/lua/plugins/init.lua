@@ -43,7 +43,7 @@ return {
     },
     {
         'Saghen/blink.cmp',
-        dependencies = { 'Fildo7525/pretty_hover' },
+        dependencies = { { 'Fildo7525/pretty_hover', opts = require 'configs.pretty-hover' } },
         opts = require 'configs.blink',
     },
     {
@@ -102,6 +102,7 @@ return {
     },
     {
         'MeanderingProgrammer/render-markdown.nvim',
+        lazy = true,
         ft = { 'markdown', 'codecompanion', 'Avante' },
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
         ---@module 'render-markdown'
@@ -169,18 +170,18 @@ return {
             vim.lsp.enable 'jdtls'
         end,
     },
-    {
-        'ThePrimeagen/refactoring.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-treesitter/nvim-treesitter',
-        },
-        lazy = false,
-        opts = {},
-        config = function()
-            require('refactoring').setup()
-        end,
-    },
+    -- {
+    --     'ThePrimeagen/refactoring.nvim',
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'nvim-treesitter/nvim-treesitter',
+    --     },
+    --     lazy = false,
+    --     opts = {},
+    --     config = function()
+    --         require('refactoring').setup()
+    --     end,
+    -- },
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
@@ -381,9 +382,9 @@ return {
         'rachartier/tiny-inline-diagnostic.nvim',
         event = 'VeryLazy',
         priority = 1000,
-        opts = {},
-        config = function()
-            require('tiny-inline-diagnostic').setup()
+        opts = require('configs.tiny').opts,
+        config = function(_, opts)
+            require('tiny-inline-diagnostic').setup(opts)
             vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
         end,
     },

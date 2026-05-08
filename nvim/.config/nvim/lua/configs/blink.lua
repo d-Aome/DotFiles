@@ -40,6 +40,7 @@ return {
         sorts = {
             'exact',
             'sort_text',
+            'label',
             'score',
             'kind',
         },
@@ -107,7 +108,7 @@ return {
                 score_offset = 2,
             },
             lsp = {
-                min_keyword_length = 0,
+                min_keyword_length = 2,
                 score_offset = 4,
             },
             path = {

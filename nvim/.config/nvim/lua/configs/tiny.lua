@@ -1,29 +1,6 @@
-require('tiny-inline-diagnostic').setup {
-    -- Choose a preset style for diagnostic appearance
-    -- Available: "modern", "classic", "minimal", "powerline", "ghost", "simple", "nonerdfont", "amongus"
-    preset = 'modern',
+local M = {}
 
-    -- Make diagnostic background transparent
-    transparent_bg = false,
-
-    -- Make cursorline background transparent for diagnostics
-    transparent_cursorline = true,
-
-    -- Customize highlight groups for colors
-    -- Use Neovim highlight group names or hex colors like "#RRGGBB"
-    hi = {
-        error = 'DiagnosticError', -- Highlight for error diagnostics
-        warn = 'DiagnosticWarn', -- Highlight for warning diagnostics
-        info = 'DiagnosticInfo', -- Highlight for info diagnostics
-        hint = 'DiagnosticHint', -- Highlight for hint diagnostics
-        arrow = 'NonText', -- Highlight for the arrow pointing to diagnostic
-        background = 'CursorLine', -- Background highlight for diagnostics
-        mixing_color = 'Normal', -- Color to blend background with (or "None")
-    },
-
-    -- List of filetypes to disable the plugin for
-    disabled_ft = {},
-
+M.opts = {
     options = {
         -- Display the source of diagnostics (e.g., "lua_ls", "pyright")
         show_source = {
@@ -89,13 +66,13 @@ require('tiny-inline-diagnostic').setup {
         -- Handle messages that exceed the window width
         overflow = {
             mode = 'wrap', -- "wrap": split into lines, "none": no truncation, "oneline": keep single line
-            padding = 0, -- Extra characters to trigger wrapping earlier
+            padding = 5, -- Extra characters to trigger wrapping earlier
         },
 
         -- Break long messages into separate lines
         break_line = {
-            enabled = false, -- Enable automatic line breaking
-            after = 30, -- Number of characters before inserting a line break
+            enabled = true, -- Enable automatic line breaking
+            after = 40, -- Number of characters before inserting a line break
         },
 
         -- Custom function to format diagnostic messages
@@ -133,3 +110,5 @@ require('tiny-inline-diagnostic').setup {
         },
     },
 }
+
+return M

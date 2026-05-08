@@ -11,6 +11,7 @@ require('mason-null-ls').setup {
         'stylua',
         'black',
         'goimports',
+        'prettier',
         -- Linters
         'luacheck',
         'shellcheck',
@@ -38,6 +39,7 @@ null_ls.setup {
         -- ========================================================================== --
         -- Lua
         --
+
         null_ls.builtins.formatting.stylua.with {
             extra_args = {
                 '--column-width',
@@ -59,6 +61,20 @@ null_ls.setup {
                 '--jsx-single-quote',
                 '--trailing-comma',
                 'all',
+            },
+            filetypes = {
+                'javascript',
+                'json',
+                'javascriptreact',
+                'typescript',
+                'typescriptreact',
+                'yaml',
+                'markdown',
+                'vue',
+                'css',
+                'html',
+                'jsonc',
+                'graphql',
             },
         },
         -- Python

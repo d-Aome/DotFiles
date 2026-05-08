@@ -19,9 +19,10 @@ wk.add {
 -- ========================================================================== --
 --                             CORE KEYBINDINGS                               --
 -- ========================================================================== --
+map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', { desc = 'toggle nvcheatsheet' })
 map('c', '<ESC>', '<C-c>')
 -- -- File & Window Management --
-map({ 'n', 'i', 'v' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file', silent = false })
+map({ 'n', 'i', 'v' }, '<C-S>', '<cmd>w<cr>', { desc = 'Save file', silent = false })
 map('n', '<leader>q', '<cmd>close<cr>', { desc = 'Window: Close' }) -- Changed from <leader>x to avoid conflict
 map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 
@@ -42,8 +43,8 @@ map('n', '<leader>o', 'o<ESC>', { desc = 'Insert line below' })
 map('n', '<leader>O', 'O<ESC>', { desc = 'Insert line above' })
 
 -- -- Visual Mode Moves (The Primeagen mappings) --
-map('v', '<A-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move Line Down' })
-map('v', '<A-k>', ':m \'<-2<CR>gv=gv', { desc = 'Move Line Up' })
+map('v', '<C-j>', ':m \'>+1<CR>gv=gv', { desc = 'Move Line Down' })
+map('v', '<C-k>', ':m \'<-2<CR>gv=gv', { desc = 'Move Line Up' })
 map('v', '<', '<gv', { desc = 'Indent Left' })
 map('v', '>', '>gv', { desc = 'Indent Right' })
 map('x', '<leader>p', '"_dP', { desc = 'Paste over selection (Keep clipboard)' })
@@ -236,19 +237,25 @@ end, { desc = 'WhichKey Lookup' })
 -- Overseer --
 
 map('n', '<leader>to', '<cmd>OverseerToggle <CR>', { desc = 'Toggle Overseer Output Buffer' })
+
 -- Refactoring
 
-map('x', '<leader>re', ':Refactor extract ')
-map('x', '<leader>rf', ':Refactor extract_to_file ')
+-- map('x', '<leader>re', ':Refactor extract ')
+-- map('x', '<leader>rf', ':Refactor extract_to_file ')
+--
+-- map('x', '<leader>rv', ':Refactor extract_var ')
+--
+-- map({ 'n', 'x' }, '<leader>ri', ':Refactor inline_var')
+--
+-- map('n', '<leader>rI', ':Refactor inline_func')
+--
+-- map('n', '<leader>rb', ':Refactor extract_block')
+-- map('n', '<leader>rbf', ':Refactor extract_block_to_file')
 
-map('x', '<leader>rv', ':Refactor extract_var ')
+-- ========================================================================== --
+--                                 DiffView                                   --
+-- ========================================================================== --
 
-map({ 'n', 'x' }, '<leader>ri', ':Refactor inline_var')
-
-map('n', '<leader>rI', ':Refactor inline_func')
-
-map('n', '<leader>rb', ':Refactor extract_block')
-map('n', '<leader>rbf', ':Refactor extract_block_to_file')
 -- ========================================================================== --
 --                                 HARPOON                                    --
 -- ========================================================================== --
@@ -259,7 +266,7 @@ harpoon:setup { settings = { save_on_toggle = true, sync_on_ui_close = true } }
 map('n', '<leader>a', function()
     harpoon:list():add()
 end, { desc = 'Harpoon: Add File' })
-map('n', '<C-e>', function()
+map('n', '<leader>he', function()
     harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = 'Harpoon: Menu' })
 

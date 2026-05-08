@@ -32,15 +32,16 @@ require('lazy').setup({
     { import = 'plugins' },
 }, lazy_config)
 
--- #vim: et:ts=4:sw=4
--- load theme
 dofile(vim.g.base46_cache .. 'defaults')
 dofile(vim.g.base46_cache .. 'statusline')
 
 require 'options'
 require 'autocmds'
-require 'load_test_lsp'
+-- require 'load_test_lsp'
 
 vim.schedule(function()
     require 'mappings'
 end)
+
+-- #vim: et:ts=4:sw=4
+-- load theme
