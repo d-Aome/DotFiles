@@ -21,7 +21,7 @@ return {
             auto_show = true,
             auto_show_delay_ms = 200,
             window = {
-                border = 'rounded',
+                border = 'single',
                 max_width = 80,
             },
         },
@@ -108,12 +108,15 @@ return {
                 score_offset = 2,
             },
             lsp = {
-                min_keyword_length = 2,
+                min_keyword_length = 0,
                 score_offset = 4,
             },
             path = {
                 min_keyword_length = 4,
                 score_offset = 2,
+            },
+            buffer = {
+                min_keyword_length = 7,
             },
             lazydev = { module = 'lazydev.integrations.blink', score_offset = 5 },
         },

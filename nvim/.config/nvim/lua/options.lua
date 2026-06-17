@@ -15,7 +15,6 @@ o.laststatus = 3
 --  Experiment for yourself to see if you like it!
 o.number = true
 o.relativenumber = true
-
 -- Enable mouse mode, can be useful for resizing splits for example!
 o.mouse = 'a'
 
@@ -66,7 +65,6 @@ o.inccommand = 'split'
 
 -- Show which line your cursor is on
 o.cursorline = true
-
 -- Minimal number of screen lines to keep above and below the cursor.
 o.scrolloff = 10
 

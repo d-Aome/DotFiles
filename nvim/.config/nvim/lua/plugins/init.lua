@@ -1,5 +1,5 @@
 return {
-    { 'ThePrimeagen/vim-be-good',      lazy = false },
+    { 'wakatime/vim-wakatime',         lazy = false },
     -- ========================================================================== --
     --                              LSP CONFIGURATION                             --
     --          Servers: clangd, rust_analyzer, ts_ls, lua_ls & Mason Setup       --
@@ -34,9 +34,7 @@ return {
     { import = 'nvchad.blink.lazyspec' },
     {
         'saghen/blink.compat',
-        -- use v2.* for blink.cmp v1.*
         version = '2.*',
-        -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
         lazy = true,
         -- make sure to set opts so that lazy.nvim calls blink.compat's setup
         opts = {},
@@ -46,14 +44,10 @@ return {
         dependencies = { { 'Fildo7525/pretty_hover', opts = require 'configs.pretty-hover' } },
         opts = require 'configs.blink',
     },
-    {
-        'nvim-tree/nvim-tree.lua',
-        enabled = false,
-    },
+    { 'nvim-tree/nvim-tree.lua', enabled = false },
     {
         'mrcjkb/rustaceanvim',
-        version = '^5', -- Recommended
-        lazy = false,   -- This plugin is already lazy
+        lazy = false, -- This plugin is already lazy
         ft = 'rust',
         opts = require('configs.rust').opts,
         config = function(_, opts)
@@ -66,14 +60,6 @@ return {
         tag = 'stable',
         config = function()
             require 'configs.crates'
-        end,
-    },
-
-    {
-        'jamespeilunli/nvim-flatbuffers',
-        event = 'LspAttach',
-        config = function()
-            require('flatbuffers').setup()
         end,
     },
 
@@ -153,8 +139,6 @@ return {
             {
                 'akinsho/toggleterm.nvim',
                 version = '*',
-                opts = { --[[ things you want to change go here]]
-                },
             },
         },
         lazy = false,
@@ -165,6 +149,7 @@ return {
     },
     {
         'nvim-java/nvim-java',
+        ft = 'java',
         config = function()
             require('java').setup()
             vim.lsp.enable 'jdtls'
@@ -214,6 +199,7 @@ return {
     },
     {
         'sindrets/diffview.nvim',
+        cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
     },
     {
         'NeoGitOrg/neogit',
@@ -227,6 +213,10 @@ return {
         keys = {
             keys = {},
         },
+    },
+    {
+        'tpope/vim-fugitive',
+        lazy = false,
     },
     {
         'christoomey/vim-tmux-navigator',
@@ -321,21 +311,6 @@ return {
             require 'configs.guess-indent'
         end,
     },
-    {
-        'linux-cultist/venv-selector.nvim',
-        dependencies = {
-            { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
-        },
-        ft = 'python',                                                                                      -- Load when opening Python files
-        keys = {
-            { ',v', '<cmd>VenvSelect<cr>' },                                                                -- Open picker on keymap
-        },
-        opts = {                                                                                            -- this can be an empty lua table - just showing below for clarity.
-            search = {},                                                                                    -- if you add your own searches, they go here.
-            options = {},                                                                                   -- if you add plugin options, they go here.
-        },
-    },
-
     -- ========================================================================== --
     --                               USER INTERFACE                               --
     --          Themes (TokyoNight), Icons, Status Line & Transparency            --
@@ -367,16 +342,6 @@ return {
         opts = function()
             return require('configs.noice').noice_opts
         end,
-    },
-    {
-        'Fildo7525/pretty_hover',
-        event = 'LspAttach',
-        opts = {
-            border = 'rounded',
-            max_width = 120,
-            wrap_at = 200,
-            max_height = 20,
-        },
     },
     {
         'rachartier/tiny-inline-diagnostic.nvim',

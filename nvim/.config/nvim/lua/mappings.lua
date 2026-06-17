@@ -22,7 +22,7 @@ wk.add {
 map('n', '<leader>ch', '<cmd>NvCheatsheet<CR>', { desc = 'toggle nvcheatsheet' })
 map('c', '<ESC>', '<C-c>')
 -- -- File & Window Management --
-map({ 'n', 'i', 'v' }, '<C-S>', '<cmd>w<cr>', { desc = 'Save file', silent = false })
+map({ 'n', 'i', 'v' }, '<leader>s', '<cmd>w<cr>', { desc = 'Save file', silent = false })
 map('n', '<leader>q', '<cmd>close<cr>', { desc = 'Window: Close' }) -- Changed from <leader>x to avoid conflict
 map('n', 'Q', '<nop>', { desc = 'Disable Ex Mode' })
 

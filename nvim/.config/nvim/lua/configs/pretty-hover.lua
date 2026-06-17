@@ -61,7 +61,7 @@ M.opt = {
     -- If you use nvim 0.11.0 or higher you can choose, whether you want to use the new
     -- multi lsp support or not. Otherwise this option is ignored.
     multi_server = true,
-    border = 'rounded',
+    border = 'solid',
     wrap = true,
     max_width = nil,
     max_height = nil,

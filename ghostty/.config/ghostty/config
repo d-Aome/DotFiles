@@ -16,3 +16,4 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 custom-shader = shaders/cursor_tail.glsl
+gtk-single-instance = false

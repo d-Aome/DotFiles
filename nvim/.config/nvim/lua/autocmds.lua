@@ -1,7 +1,7 @@
 require 'nvchad.autocmds'
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'help', 'man', 'markdown', 'text' },
+    pattern = { 'help', 'man', 'markdown' },
     group = vim.api.nvim_create_augroup('OpaqueManHelp', { clear = true }),
     callback = function()
         -- 1. Disable pseudo-transparency (for floating windows)
@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd('FileType', {
         -- 2. Force a background color
         -- If your theme clears the background, this maps the local 'Normal'
         -- group to 'NormalFloat' (which usually retains a background color).
-        -- You can also change 'NormalFloat' to 'Pmenu' or 'StatusLine' if preferred.
+        -- You can also change 'NormalFloat' to 'Pmenu' or 'StatusLine' if preferred.aute
         vim.opt_local.winhighlight = 'Normal:NormalFloat'
     end,
 })
@@ -24,4 +24,5 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
     end,
 })
 
+vim.cmd.cnoreabbrev 'OS OverseerShell'
 vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]

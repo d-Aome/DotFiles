@@ -9,7 +9,6 @@ require('mason-null-ls').setup {
         'golines',
         'prettier',
         'stylua',
-        'black',
         'goimports',
         'prettier',
         -- Linters
@@ -17,6 +16,7 @@ require('mason-null-ls').setup {
         'shellcheck',
         'eslint_d',
         'ruff',
+        'mypy',
     },
 
     automatic_installation = true,
@@ -91,7 +91,9 @@ null_ls.setup {
                 AccessModifierOffset: 0, \
                 IndentAccessModifiers: true, \
                 PackConstructorInitializers: Never, \
-                SortIncludes: false }',
+                SortIncludes: false \
+                AlignArrayOfStructures: None \
+                BinPackArguments: false }',
             },
         },
         -- Go
@@ -104,6 +106,13 @@ null_ls.setup {
         -- ========================================================================== --
         --                                  DIAGNOSTICS                               --
         -- ========================================================================== --
+
+        null_ls.builtins.diagnostics.mypy.with {
+            extra_args = function()
+                local virtual = os.getenv 'VIRTUAL_ENV' or os.getenv 'CONDA_PREFIX' or '/usr'
+                return { '--python-executable', virtual .. '/bin/python3' }
+            end,
+        },
         require('none-ls-luacheck.diagnostics.luacheck').with {
             extra_args = { '--globals', 'love', 'vim' },
         },
@@ -127,8 +136,6 @@ null_ls.setup {
                 group = augroup,
                 buffer = bufnr,
                 callback = function()
-                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                    -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
                     vim.lsp.buf.format { async = false }
                 end,
             })

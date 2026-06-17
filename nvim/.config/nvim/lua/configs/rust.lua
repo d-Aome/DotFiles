@@ -5,8 +5,6 @@ M.opts = function()
     local codelldb = mason_registry.get_package 'codelldb'
     local extension_path = require('mason.settings').current.install_root_dir .. '/extensions/'
     local codelldb_path = extension_path .. 'adapter/codelldb'
-    -- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-    -- If you are on Linux, replace the line above with the line below:
     local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
 
     local cfg = require 'rustaceanvim.config'
@@ -16,17 +14,17 @@ M.opts = function()
         },
         server = {
             ['rust-analyzer'] = {
-                cargo = {
-                    allFeatures = true,
-                },
-                checkOnSave = {
-                    command = 'clipppy',
-                },
-                diagnostics = {
-                    experimental = true,
-                },
+                checkOnSave = false,
             },
         },
+        on_attach = function(_, bufnr)
+            vim.api.nvim_create_autocmd('BufFilePost', {
+                buffer = bufnr,
+                callback = function()
+                    vim.cmd 'RustLsp flycheck'
+                end,
+            })
+        end,
     }
 end
 
